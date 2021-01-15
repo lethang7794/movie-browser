@@ -16,7 +16,7 @@ function App() {
             <MovieListPage />
           </Route>
           <Route exact path='/top-rated'>
-            <h1>Top Rated Page</h1>
+            <MovieListPage type={'top_rated'} />
           </Route>
           <Route exact path='/'>
             <HomePage />
