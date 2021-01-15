@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# CoderSchool FTW - _MOVIE BROWSER_
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Created with love by: `Thang`
 
-## Available Scripts
+<!-- View online at: `Your URL here` -->
+<!-- TODO: 🎉 Public online to CodePen/Repl.it/CodeSandbox/Netlify then update the link here -->
 
-In the project directory, you can run:
+Summary: This is a clone of [IMDB](https://www.imdb.com/) built with _React_ using the public [The Movie Database (TMDb) API](https://developers.themoviedb.org/3/).
 
-### `npm start`
+<!-- ## Video Walkthrough
+Here's a walkthrough of implemented user stories.
+To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http://www.recordit.co), or [Loom](http://www.useloom.com), and link the image here in the markdown.
+```
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+``` -->
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- TODO: 🎬 Make a gif and show here -->
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## User Stories
 
-### `npm test`
+<!-- TODO: 🔴🟠🟢 ADD USER STORIES -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### The following **required** functionalities are completed:
 
-### `npm run build`
+- [ ] The user can see the top 20 "Currently Playing" movies on a page.
+- [ ] For each movie, the user can see the Movie Title, Year, Rating, and Poster.
+- [ ] The user can see this information clearly on devices of various screen sizes.
+- [ ] The user can see "more" movies by tapping a "See More" button at the bottom.
+- [ ] Pagination: Replace the "See More" with a page control, with a previous and next Button at the end. Click it will move user to the next 20 (or previous 20) movies. Remember at first load, the Previous button should be disabled.
+- [ ] For each movie, include a link (movie/id) to display the full Movie Info on another page (URL). Use React Router for this.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### The following **optional** features are implemented:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ ] 🚀 The user can enter a term into a search box to filter the currently loaded movies by search term. E.g.: the user can type "mar" and the results are reduced to show "Captain Marvel".
+- [ ] 🚀 The user can change the "source" from "Currently Playing" movies to "Top Rated" movies (or any other of the endpoints supplied by MovieDB).
+- [ ] 🚀 Sort by Rating and Popularity (from Lowest to Highest and Vice Versa)
+- [ ] 🚀 Have Year, Rating as a slider. Change the display dynamically when the slider is changed. You could use React Input Range package for this task.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### The following **additional** features are implemented:
 
-### `npm run eject`
+- [ ] 🚀🚀🚀 This awesome README.md
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<!-- ## Time Spent and Lessons Learned -->
+<!-- Time spent: **X** hours spent in total. -->
+<!-- TODO: ⌛ Add time spent -->
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!-- ### Challenges encountered while building the app:
+- A challange -->
+<!-- TODO: 🚧 What is the challanges?  -->
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<!-- ### Lessons Learned:
+- A lesson -->
+<!-- TODO: 🐱‍🏍 What did you learn? -->
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## License
 
-## Learn More
+    Copyright [2021] [Le Quang Thang]
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+        http://www.apache.org/licenses/LICENSE-2.0
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
