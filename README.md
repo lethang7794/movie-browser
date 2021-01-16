@@ -39,6 +39,7 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 ### The following **additional** features are implemented:
 
 - [ ] 🚀🚀🚀 This awesome README.md
+- [x] Make the path for a movie friendly (contains both the movie id and title)
 
 <!-- ## Time Spent and Lessons Learned -->
 <!-- Time spent: **X** hours spent in total. -->

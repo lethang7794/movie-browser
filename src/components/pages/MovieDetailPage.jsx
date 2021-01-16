@@ -2,12 +2,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 function MovieDetailPage() {
-  const { id } = useParams();
+  const { moviePath } = useParams();
+  const movieID = moviePath.match(/\d+/);
 
   return (
     <div>
       <div>Hello from MovieDetailPage component</div>
-      <div>{`We're at /movies/${id}`}</div>
+      <div>{`We're at /movie/${movieID}`}</div>
     </div>
   );
 }

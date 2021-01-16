@@ -22,7 +22,7 @@ function App() {
           <Route exact path='/top-rated'>
             <MovieListPage type={'top_rated'} />
           </Route>
-          <Route path='/movies/:id'>
+          <Route path='/movie/:moviePath'>
             <MovieDetailPage />
           </Route>
           <Route>

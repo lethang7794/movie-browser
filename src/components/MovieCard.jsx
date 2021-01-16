@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './MovieCard.css';
 
 const API_IMAGE_URL = process.env.REACT_APP_TMDB_API_IMAGE_URL;
@@ -16,8 +17,14 @@ const backdrop_sizes = ['w300', 'w780', 'w1280', 'original'];
 // ];
 
 function MovieCard({ movie }) {
+  const moviePath = movie.title
+    .replace(/[\s]+|\t|\n|\r|\//g, '-') // Replace spaces, tab, newline, slash with dash.
+    .replace(/[^a-zA-Z0-9-_]/g, ''); // Remove any character that is not a word character or dash.
+
   return (
     <Col
+      as={Link}
+      to={`movie/${movie.id}-${moviePath}`}
       xs={12}
       md={8}
       lg={6}
