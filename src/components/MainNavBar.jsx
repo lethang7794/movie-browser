@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import coderSchoolLogo from '../images/CoderSchool-Logo.svg';
 import githubMark from '../images/GitHub-Mark-64px.png';
 
@@ -14,13 +14,13 @@ const MainNavBar = () => (
 
     <Navbar.Collapse id='basic-navbar-nav'>
       <Nav className='mr-auto'>
-        <Nav.Link as={Link} to='/'>
+        <Nav.Link as={NavLink} exact to='/'>
           Home
         </Nav.Link>
-        <Nav.Link as={Link} to='/now-playing'>
+        <Nav.Link as={NavLink} exact to='/now-playing'>
           Now Playing
         </Nav.Link>
-        <Nav.Link as={Link} to='/top-rated'>
+        <Nav.Link as={NavLink} exact to='/top-rated'>
           Top Rated
         </Nav.Link>
       </Nav>
