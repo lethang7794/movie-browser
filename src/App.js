@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import MainNavBar from './components/MainNavBar';
 import HomePage from './components/pages/HomePage';
+import MovieDetailPage from './components/pages/MovieDetailPage';
 import MovieListPage from './components/pages/MovieListPage';
 
 function App() {
@@ -12,14 +13,17 @@ function App() {
       <MainNavBar />
       <Container>
         <Switch>
+          <Route exact path='/'>
+            <HomePage />
+          </Route>
           <Route exact path='/now-playing'>
             <MovieListPage />
           </Route>
           <Route exact path='/top-rated'>
             <MovieListPage type={'top_rated'} />
           </Route>
-          <Route exact path='/'>
-            <HomePage />
+          <Route path='/movies/:id'>
+            <MovieDetailPage />
           </Route>
           <Route>
             <h1>Not Found</h1>
