@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import './MovieListPage.css';
+import MovieCard from '../MovieCard';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
-const API_IMAGE_URL = process.env.REACT_APP_TMDB_API_IMAGE_URL;
-
-const backdrop_sizes = ['w300', 'w780', 'w1280', 'original'];
-// const poster_sizes = [
-//   'w92',
-//   'w154',
-//   'w185',
-//   'w342',
-//   'w500',
-//   'w780',
-//   'original',
-// ];
 
 const pages = {
   top_rated: {
@@ -72,31 +61,7 @@ const MovieListPage = ({ type }) => {
       </Row>
       <Row className='MovieList justify-content-center'>
         {movies.map((movie) => (
-          <Col
-            xs={12}
-            md={8}
-            lg={6}
-            xl={4}
-            key={movie.id}
-            style={{ paddingBottom: '1.5rem' }}
-          >
-            <Card
-              className='MovieCard'
-              style={{ width: '-18rem', height: '100%' }}
-            >
-              <div className='ratio ratio-16x9'>
-                <Card.Img
-                  variant='top'
-                  src={`${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`}
-                />
-              </div>
-              <Card.Body>
-                <Card.Title>{movie.title}</Card.Title>
-                <Card.Text>{movie.overview.slice(0, 80) + '...'}</Card.Text>
-                <Card.Text>{movie.vote_average}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
+          <MovieCard movie={movie} key={movie.id} />
         ))}
       </Row>
     </div>
