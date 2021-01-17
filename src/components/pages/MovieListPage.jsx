@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import './MovieListPage.css';
 import MovieCard from '../MovieCard';
 
@@ -42,6 +42,9 @@ const MovieListPage = ({ type }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [filterTerm, setFilterTerm] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
   useEffect(() => {
     async function fetchMovies() {
       hasPagination && setIsLoading(true);
@@ -73,8 +76,10 @@ const MovieListPage = ({ type }) => {
         // Only append to old movies state if endpoint not changed
         if (newEndpoint !== endpoint || hasPagination) {
           setMovies(data.results);
+          setFilteredMovies(data.results);
         } else {
           setMovies((movie) => [...movie, ...data.results]);
+          setFilteredMovies((movie) => [...movie, ...data.results]);
         }
 
         setEndpoint(newEndpoint);
@@ -91,6 +96,16 @@ const MovieListPage = ({ type }) => {
   }, [type, page]);
   // TODO: Find better way to check for previous state.
 
+  useEffect(() => {
+    let newMovies = movies.filter((movie) =>
+      movie.title.toLowerCase().includes(filterTerm.toLowerCase())
+    );
+    setFilteredMovies(newMovies);
+  }, [filterTerm]);
+
+  const showMovies = (movies) =>
+    movies.map((movie) => <MovieCard movie={movie} key={movie.id} />);
+
   return (
     <div className='MovieListPage'>
       <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
@@ -102,25 +117,45 @@ const MovieListPage = ({ type }) => {
             {movieLists[endpoint] && movieLists[endpoint].description}
           </p>
         </Col>
+        <>
+          {totalPages && (
+            <Form
+              inline
+              className='position-sticky'
+              style={{ top: 0 }}
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <Form.Label htmlFor='searchForm' srOnly>
+                Movie
+              </Form.Label>
+              <Form.Control
+                className='mb-2 mr-sm-2'
+                id='searchForm'
+                placeholder=''
+                onChange={(e) => {
+                  setFilterTerm(e.target.value);
+                }}
+                value={filterTerm}
+              />
+              <Button type='submit' className='mb-2'>
+                Search 🔎
+              </Button>
+            </Form>
+          )}
+        </>
       </Row>
       <Row className='MovieList'>
         <>
           {!hasPagination ? (
-            <>
-              {movies.map((movie) => (
-                <MovieCard movie={movie} key={movie.id} />
-              ))}
-            </>
+            <>{showMovies(filteredMovies)}</>
           ) : (
             <>
               {isLoading ? (
                 <h1 className='w-100 mt-5 text-center'>Loading</h1>
               ) : (
-                <>
-                  {movies.map((movie) => (
-                    <MovieCard movie={movie} key={movie.id} />
-                  ))}
-                </>
+                <>{showMovies(filteredMovies)}</>
               )}
             </>
           )}
@@ -129,7 +164,8 @@ const MovieListPage = ({ type }) => {
       <Row className='mb-5'>
         <Col>
           <>
-            {!hasPagination && (
+            {/* LOAD MORE BUTTON */}
+            {filterTerm === '' && !hasPagination && (
               <div className='LoadMore'>
                 {totalPages && page !== totalPages && (
                   <Button
@@ -144,8 +180,10 @@ const MovieListPage = ({ type }) => {
               </div>
             )}
           </>
+
           <>
-            {hasPagination && !isLoading && totalPages && (
+            {/* PAGINATION */}
+            {filterTerm === '' && hasPagination && !isLoading && totalPages && (
               <div className='Pagination d-flex justify-content-between'>
                 <Button
                   id='Previous'
@@ -166,6 +204,17 @@ const MovieListPage = ({ type }) => {
                   Next
                 </Button>
               </div>
+            )}
+          </>
+
+          <>
+            {/* SEARCH ALL */}
+            {filterTerm !== '' && filteredMovies.length === 0 && (
+              <h2 className='text-center font-weight-normal mt-5'>
+                <span>There is no movie with title includes</span>
+                <strong> {filterTerm} </strong>
+                <span>here.</span>
+              </h2>
             )}
           </>
         </Col>
