@@ -21,6 +21,15 @@ function MovieCard({ movie }) {
     .replace(/[\s]+|\t|\n|\r|\//g, '-') // Replace spaces, tab, newline, slash with dash.
     .replace(/[^a-zA-Z0-9-_]/g, ''); // Remove any character that is not a word character or dash.
 
+  // Fallback for movie without backdrop
+  let movieImageSrc = movie.backdrop_path
+    ? `${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`
+    : null;
+
+  // Format rating with 1 digit to appear after the decimal point and fallback for movie without rating
+  let movieRating =
+    movie.vote_average > 0 ? movie.vote_average.toFixed(1) : null;
+
   return (
     <Col
       as={Link}
@@ -33,12 +42,8 @@ function MovieCard({ movie }) {
       className='MovieCardWrapper text-reset'
     >
       <Card className='MovieCard' style={{ height: '100%' }}>
-        <div className='ratio ratio-16x9'>
-          <Card.Img
-            variant='top'
-            src={`${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`}
-            className='backdrop'
-          />
+        <div className='img-wrapper ratio ratio-16x9'>
+          <Card.Img variant='top' src={movieImageSrc} className='backdrop' />
         </div>
         <Card.Body>
           <Card.Title>
@@ -47,7 +52,7 @@ function MovieCard({ movie }) {
               {` (${movie.release_date.match(/\d+/)})`}
             </span>
           </Card.Title>
-          <Card.Text className='rating'>{movie.vote_average}</Card.Text>
+          <Card.Text className='rating'>{movieRating}</Card.Text>
         </Card.Body>
       </Card>
     </Col>

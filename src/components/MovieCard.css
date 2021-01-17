@@ -3,7 +3,9 @@
   text-decoration: none;
 }
 
-.MovieCard {
+/* Fallback when image can't be loaded */
+.MovieCard .img-wrapper {
+  background-color: lightgray;
 }
 
 /* From Bootstrap 5*/
