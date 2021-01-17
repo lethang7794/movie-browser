@@ -32,17 +32,22 @@ function MovieCard({ movie }) {
       style={{ paddingBottom: '1.5rem' }}
       className='MovieCardWrapper text-reset'
     >
-      <Card className='MovieCard' style={{ width: '-18rem', height: '100%' }}>
+      <Card className='MovieCard' style={{ height: '100%' }}>
         <div className='ratio ratio-16x9'>
           <Card.Img
             variant='top'
             src={`${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`}
+            className='backdrop'
           />
         </div>
         <Card.Body>
-          <Card.Title>{movie.title}</Card.Title>
-          <Card.Text>{movie.overview.slice(0, 80) + '...'}</Card.Text>
-          <Card.Text>{movie.vote_average}</Card.Text>
+          <Card.Title>
+            <span className='title'>{movie.title}</span>
+            <span className='release-year' style={{ fontWeight: 'normal' }}>
+              {` (${movie.release_date.match(/\d+/)})`}
+            </span>
+          </Card.Title>
+          <Card.Text className='rating'>{movie.vote_average}</Card.Text>
         </Card.Body>
       </Card>
     </Col>
