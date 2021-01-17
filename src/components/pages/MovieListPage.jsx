@@ -23,15 +23,24 @@ const MovieListPage = ({ type }) => {
   const [endpoint, setEndpoint] = useState('');
   const [page, setPage] = useState(1);
 
+  const [totalPages, setTotalPages] = useState(null);
+  const [hasPagination, setHasPagination] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     async function fetchMovies() {
+      hasPagination && setIsLoading(true);
+
       let newEndpoint;
+      setHasPagination(false);
       switch (type) {
         case 'top_rated':
           newEndpoint = 'top_rated';
           break;
         default:
           newEndpoint = 'now_playing';
+          setHasPagination(true);
           break;
       }
 
@@ -48,8 +57,10 @@ const MovieListPage = ({ type }) => {
       if (response.ok) {
         const data = await response.json();
 
+        setTotalPages(data.total_pages);
+
         // Only append to old movies state if endpoint not changed
-        if (newEndpoint !== endpoint) {
+        if (newEndpoint !== endpoint || hasPagination) {
           setMovies(data.results);
         } else {
           setMovies((movie) => [...movie, ...data.results]);
@@ -57,6 +68,11 @@ const MovieListPage = ({ type }) => {
 
         setEndpoint(newEndpoint);
       }
+
+      hasPagination &&
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
     }
 
     fetchMovies();
@@ -77,20 +93,62 @@ const MovieListPage = ({ type }) => {
         </Col>
       </Row>
       <Row className='MovieList'>
-        {movies.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+        <>
+          {!hasPagination ? (
+            <>
+              {movies.map((movie) => (
+                <MovieCard movie={movie} key={movie.id} />
+              ))}
+            </>
+          ) : (
+            <>
+              {isLoading ? (
+                <div className='w-100 text-center'>Loading</div>
+              ) : (
+                <>
+                  {movies.map((movie) => (
+                    <MovieCard movie={movie} key={movie.id} />
+                  ))}
+                </>
+              )}
+            </>
+          )}
+        </>
       </Row>
-      <Row>
+      <Row className='mb-5'>
         <Col>
-          <Button
-            onClick={() => {
-              setPage((page) => page + 1);
-            }}
-            className='d-block w-100 mb-5'
-          >
-            See More
-          </Button>
+          <div className='LoadMore'>
+            {!hasPagination && totalPages && page !== totalPages && (
+              <Button
+                onClick={() => {
+                  setPage((page) => page + 1);
+                }}
+                className='d-block w-100'
+              >
+                See More
+              </Button>
+            )}
+          </div>
+          <>
+            {hasPagination && !isLoading && totalPages && (
+              <div className='Pagination d-flex justify-content-between'>
+                <Button
+                  id='Previous'
+                  onClick={(e) => setPage((page) => page - 1)}
+                  disabled={page === 1 ? true : false}
+                >
+                  Previous
+                </Button>
+                <Button
+                  id='Next'
+                  onClick={(e) => setPage((page) => page + 1)}
+                  disabled={page === totalPages ? true : false}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
+          </>
         </Col>
       </Row>
     </div>
