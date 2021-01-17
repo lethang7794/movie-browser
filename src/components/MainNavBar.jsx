@@ -23,6 +23,12 @@ const MainNavBar = () => (
         <Nav.Link as={NavLink} exact to='/top-rated'>
           Top Rated
         </Nav.Link>
+        <Nav.Link as={NavLink} exact to='/popular'>
+          Polular
+        </Nav.Link>
+        <Nav.Link as={NavLink} exact to='/upcoming'>
+          Upcoming
+        </Nav.Link>
       </Nav>
       <Nav>
         <Nav.Link

@@ -22,6 +22,12 @@ function App() {
           <Route exact path='/top-rated'>
             <MovieListPage type={'top_rated'} />
           </Route>
+          <Route exact path='/popular'>
+            <MovieListPage type={'popular'} />
+          </Route>
+          <Route exact path='/upcoming'>
+            <MovieListPage type={'upcoming'} />
+          </Route>
           <Route path='/movie/:moviePath'>
             <MovieDetailPage />
           </Route>
