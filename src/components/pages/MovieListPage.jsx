@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import './MovieListPage.css';
 import MovieCard from '../MovieCard';
 
@@ -21,31 +21,48 @@ const pages = {
 const MovieListPage = ({ type }) => {
   const [movies, setMovies] = useState([]);
   const [endpoint, setEndpoint] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function fetchMovies() {
-      let endpoint;
+      let newEndpoint;
       switch (type) {
         case 'top_rated':
-          endpoint = 'top_rated';
+          newEndpoint = 'top_rated';
           break;
         default:
-          endpoint = 'now_playing';
+          newEndpoint = 'now_playing';
           break;
       }
 
-      const url = `${API_URL}/movie/${endpoint}?api_key=${API_KEY}`;
+      // Reset page to 1 if changed to different endpoint
+      let newPage = page;
+      if (newEndpoint !== endpoint) {
+        newPage = 1;
+        setPage(newPage);
+      }
+
+      const url = `${API_URL}/movie/${newEndpoint}?page=${newPage}&api_key=${API_KEY}`;
       const response = await fetch(url);
 
       if (response.ok) {
         const data = await response.json();
-        setMovies(data.results);
-        setEndpoint(endpoint);
+
+        // Only append to old movies state if endpoint not changed
+        if (newEndpoint !== endpoint) {
+          setMovies(data.results);
+        } else {
+          setMovies((movie) => [...movie, ...data.results]);
+        }
+
+        setEndpoint(newEndpoint);
       }
     }
 
     fetchMovies();
-  }, [type]);
+    // eslint-disable-next-line
+  }, [type, page]);
+  // TODO: Find better way to check for previous state.
 
   return (
     <div>
@@ -59,10 +76,22 @@ const MovieListPage = ({ type }) => {
           </p>
         </Col>
       </Row>
-      <Row className='MovieList justify-content-center'>
+      <Row className='MovieList'>
         {movies.map((movie) => (
           <MovieCard movie={movie} key={movie.id} />
         ))}
+      </Row>
+      <Row>
+        <Col>
+          <Button
+            onClick={() => {
+              setPage((page) => page + 1);
+            }}
+            className='d-block w-100 mb-5'
+          >
+            See More
+          </Button>
+        </Col>
       </Row>
     </div>
   );

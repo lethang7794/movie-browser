@@ -1,0 +1,6 @@
+@media (max-width: 991.98px) {
+  /* Medium and small device has one column, this keep the column center */
+  .MovieList {
+    justify-content: center;
+  }
+}
