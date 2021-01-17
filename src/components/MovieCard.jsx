@@ -30,7 +30,7 @@ function MovieCard({ movie }) {
       lg={6}
       xl={4}
       style={{ paddingBottom: '1.5rem' }}
-      className='MovieCardWrapper'
+      className='MovieCardWrapper text-reset'
     >
       <Card className='MovieCard' style={{ width: '-18rem', height: '100%' }}>
         <div className='ratio ratio-16x9'>
