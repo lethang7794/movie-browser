@@ -27,7 +27,7 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 - [ ] The user can see this information clearly on devices of various screen sizes.
 - [ ] The user can see "more" movies by tapping a "See More" button at the bottom.
 - [ ] Pagination: Replace the "See More" with a page control, with a previous and next Button at the end. Click it will move user to the next 20 (or previous 20) movies. Remember at first load, the Previous button should be disabled.
-- [ ] For each movie, include a link (movie/id) to display the full Movie Info on another page (URL). Use React Router for this.
+- [x] For each movie, include a link (movie/id) to display the full Movie Info on another page (URL). Use React Router for this.
 
 ### The following **optional** features are implemented:
 
