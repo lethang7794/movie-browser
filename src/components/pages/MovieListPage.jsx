@@ -128,7 +128,7 @@ const MovieListPage = ({ type }) => {
       movie.title.toLowerCase().includes(filterTerm.toLowerCase())
     );
     setFilteredMovies(newMovies);
-  }, [filterTerm]);
+  }, [filterTerm, movies]);
 
   const showMovies = (movies) =>
     movies.map((movie) => <MovieCard movie={movie} key={movie.id} />);

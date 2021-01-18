@@ -1,9 +1,9 @@
 # CoderSchool FTW - _MOVIE BROWSER_
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d30a7642-7e52-4db8-abee-ff0c0bebfafb/deploy-status)](https://app.netlify.com/sites/lqt-movie-browser/deploys)
 
 Created with love by: `Thang`
 
-<!-- View online at: `Your URL here` -->
-<!-- TODO: 🎉 Public online to CodePen/Repl.it/CodeSandbox/Netlify then update the link here -->
+View online at: [Demo app at Netlify](https://lqt-movie-browser.netlify.app/)
 
 Summary: This is a clone of [IMDB](https://www.imdb.com/) built with _React_ using the public [The Movie Database (TMDb) API](https://developers.themoviedb.org/3/).
 
