@@ -28,6 +28,9 @@ function App() {
           <Route exact path='/upcoming'>
             <MovieListPage type={'upcoming'} />
           </Route>
+          <Route exact path='/search'>
+            <MovieListPage type={'search'} />
+          </Route>
           <Route path='/movie/:moviePath'>
             <MovieDetailPage />
           </Route>

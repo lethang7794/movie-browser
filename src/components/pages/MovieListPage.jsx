@@ -2,31 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import './MovieListPage.css';
 import MovieCard from '../MovieCard';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
 
 const movieLists = {
   top_rated: {
-    endpoint: 'top_rated',
+    endpoint: 'movie/top_rated',
     title: 'Top Rated Movies',
     description: `Quae aut reiciendis et. Qui ea enim est ad nihil beatae laboriosam laudantium veritatis. Quia voluptates excepturi officia. Sit necessitatibus nihil ratione odio a incidunt dolores fugiat.`,
   },
   now_playing: {
-    endpoint: 'now_playing',
+    endpoint: 'movie/now_playing',
     title: 'Now Playing Movies',
     description:
       'Quis dolorum sequi quo magnam. Non fugiat neque unde fuga deserunt qui. Voluptas quasi fugiat illum est voluptatem harum voluptas fugit. Voluptas sit eius omnis.',
   },
   popular: {
-    endpoint: 'popular',
+    endpoint: 'movie/popular',
     title: 'Popular Movies',
     description:
       'Est animi dolore dignissimos. Quaerat sapiente ut modi quam. Veritatis adipisci earum pariatur excepturi.',
   },
   upcoming: {
-    endpoint: 'upcoming',
+    endpoint: 'movie/upcoming',
     title: 'Upcoming Movies',
+    description:
+      'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam. Voluptatum doloremque aut accusantium voluptatem doloribus quisquam nisi at sit.',
+  },
+  search: {
+    endpoint: 'search/movie',
+    title: 'Search for all movies',
     description:
       'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam. Voluptatum doloremque aut accusantium voluptatem doloribus quisquam nisi at sit.',
   },
@@ -44,11 +51,14 @@ const MovieListPage = ({ type }) => {
 
   const [filterTerm, setFilterTerm] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchMovies() {
       hasPagination && setIsLoading(true);
-
       let newEndpoint;
       if (movieLists.hasOwnProperty(type) && type !== 'now_playing') {
         newEndpoint = movieLists[type].endpoint;
@@ -57,7 +67,6 @@ const MovieListPage = ({ type }) => {
         newEndpoint = movieLists.now_playing.endpoint;
         setHasPagination(true);
       }
-
       // Reset page to 1 if changed to different endpoint
       let newPage = page;
       if (newEndpoint !== endpoint) {
@@ -65,7 +74,21 @@ const MovieListPage = ({ type }) => {
         setPage(newPage);
       }
 
-      const url = `${API_URL}/movie/${newEndpoint}?page=${newPage}&api_key=${API_KEY}`;
+      // Reset total pages
+      setTotalPages(0);
+
+      let url = `${API_URL}/${newEndpoint}?page=${newPage}&api_key=${API_KEY}`;
+
+      if (newEndpoint === 'search/movie') {
+        if (filterTerm === '') {
+          setMovies([]);
+          setFilteredMovies([]);
+          setEndpoint(newEndpoint);
+          return null;
+        }
+        url += `&query=${searchTerm}`;
+      }
+
       const response = await fetch(url);
 
       if (response.ok) {
@@ -82,6 +105,10 @@ const MovieListPage = ({ type }) => {
           setFilteredMovies((movie) => [...movie, ...data.results]);
         }
 
+        if (newEndpoint !== endpoint && newEndpoint !== 'search/movie') {
+          setFilterTerm('');
+        }
+
         setEndpoint(newEndpoint);
       }
 
@@ -93,7 +120,7 @@ const MovieListPage = ({ type }) => {
 
     fetchMovies();
     // eslint-disable-next-line
-  }, [type, page]);
+  }, [type, page, searchTerm]);
   // TODO: Find better way to check for previous state.
 
   useEffect(() => {
@@ -106,19 +133,32 @@ const MovieListPage = ({ type }) => {
   const showMovies = (movies) =>
     movies.map((movie) => <MovieCard movie={movie} key={movie.id} />);
 
+  let movieListType;
+  if (endpoint === 'search/movie') {
+    movieListType = 'search';
+  } else {
+    movieListType = endpoint.replace(/movie\//, '');
+  }
+
+  const handleSearch = () => {
+    history.push(`/search?q=${filterTerm}`);
+    setSearchTerm(filterTerm);
+    setPage(1);
+  };
+
   return (
     <div className='MovieListPage'>
       <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
         <Col lg={6}>
           <h1 className='text-center'>
-            {movieLists[endpoint] && movieLists[endpoint].title}
+            {movieLists[movieListType] && movieLists[movieListType].title}
           </h1>
           <p className='text-center'>
-            {movieLists[endpoint] && movieLists[endpoint].description}
+            {movieLists[movieListType] && movieLists[movieListType].description}
           </p>
         </Col>
         <>
-          {totalPages && (
+          {(location.pathname === '/search' || totalPages) && (
             <Form
               inline
               className='position-sticky'
@@ -139,7 +179,7 @@ const MovieListPage = ({ type }) => {
                 }}
                 value={filterTerm}
               />
-              <Button type='submit' className='mb-2'>
+              <Button type='submit' className='mb-2' onClick={handleSearch}>
                 Search 🔎
               </Button>
             </Form>
@@ -165,7 +205,13 @@ const MovieListPage = ({ type }) => {
         <Col>
           <>
             {/* LOAD MORE BUTTON */}
-            {filterTerm === '' && !hasPagination && (
+            {((location.pathname !== '/now-playing' &&
+              location.pathname !== '/search') ||
+              (location.pathname === '/search' &&
+                searchTerm !== '' &&
+                totalPages > 1 &&
+                filterTerm === searchTerm) ||
+              (movies.length > 0 && filterTerm === '' && !hasPagination)) && (
               <div className='LoadMore'>
                 {totalPages && page !== totalPages && (
                   <Button
@@ -183,37 +229,49 @@ const MovieListPage = ({ type }) => {
 
           <>
             {/* PAGINATION */}
-            {filterTerm === '' && hasPagination && !isLoading && totalPages && (
-              <div className='Pagination d-flex justify-content-between'>
-                <Button
-                  id='Previous'
-                  onClick={(e) => setPage((page) => page - 1)}
-                  disabled={page === 1 ? true : false}
-                  style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
-                >
-                  Previous
-                </Button>
-                <Button
-                  id='Next'
-                  onClick={(e) => setPage((page) => page + 1)}
-                  disabled={page === totalPages ? true : false}
-                  style={{
-                    visibility: `${page === totalPages ? 'hidden' : null}`,
-                  }}
-                >
-                  Next
-                </Button>
-              </div>
-            )}
+            {(movies.length > 0 || filterTerm === '') &&
+              hasPagination &&
+              !isLoading &&
+              totalPages && (
+                <div className='Pagination d-flex justify-content-between'>
+                  <Button
+                    id='Previous'
+                    onClick={(e) => setPage((page) => page - 1)}
+                    disabled={page === 1 ? true : false}
+                    style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    id='Next'
+                    onClick={(e) => setPage((page) => page + 1)}
+                    disabled={page === totalPages ? true : false}
+                    style={{
+                      visibility: `${page === totalPages ? 'hidden' : null}`,
+                    }}
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
           </>
 
           <>
             {/* SEARCH ALL */}
-            {filterTerm !== '' && filteredMovies.length === 0 && (
+            {location.pathname !== '/search' &&
+              filterTerm !== '' &&
+              filteredMovies.length === 0 && (
+                <h2 className='text-center font-weight-normal mt-5'>
+                  <span>There is no movie whose title includes</span>
+                  <strong> {filterTerm} </strong>
+                  <span>here.</span>
+                </h2>
+              )}
+          </>
+          <>
+            {location.pathname === '/search' && filteredMovies.length === 0 && (
               <h2 className='text-center font-weight-normal mt-5'>
-                <span>There is no movie with title includes</span>
-                <strong> {filterTerm} </strong>
-                <span>here.</span>
+                <span>Whatever movie you wanna.</span>
               </h2>
             )}
           </>

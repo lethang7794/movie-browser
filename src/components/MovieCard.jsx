@@ -30,6 +30,10 @@ function MovieCard({ movie }) {
   let movieRating =
     movie.vote_average > 0 ? movie.vote_average.toFixed(1) : null;
 
+  let movieReleaseDate = movie.release_date
+    ? movie.release_date.match(/\d+/)
+    : null;
+
   return (
     <Col
       as={Link}
@@ -49,7 +53,7 @@ function MovieCard({ movie }) {
           <Card.Title>
             <span className='title'>{movie.title}</span>
             <span className='release-year' style={{ fontWeight: 'normal' }}>
-              {` (${movie.release_date.match(/\d+/)})`}
+              {` (${movieReleaseDate})`}
             </span>
           </Card.Title>
           <Card.Text className='rating'>{movieRating}</Card.Text>
