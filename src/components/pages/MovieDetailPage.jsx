@@ -22,6 +22,8 @@ const poster_sizes = [
 function MovieDetailPage() {
   const { moviePath } = useParams();
   const [movie, setMovie] = useState(null);
+  const [show, setShow] = useState(false);
+
 
   useEffect(() => {
     async function fetchMovie() {
@@ -54,12 +56,41 @@ function MovieDetailPage() {
     movie.runtime % 60
     }m`;
  
+  
+  const PlayTrailer = () => {
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+      <div>
+        <Button variant="primary" onClick={handleShow}>
+          Launch demo modal
+        </Button>
+
+        <div>
+            <Modal.Dialog id="trailer">
+                    <Modal.Title>Trailers</Modal.Title>
+
+                    <Modal.Body>
+                    {movie.videos &&
+                    movie.videos.results.slice(0, 5).map((video, index) => (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.key}?rel=0`}
+                          title={video.name}
+                        ></iframe>
+                    ))}
+                    </Modal.Body>
+                  </Modal.Dialog>
+          </div>
+      </div>
+    );
+  }
 
   return (
     <div className='MovieDetail'>
-      <img src={`${API_IMAGE_URL}/${backdrop_sizes[4]}${movie.backdrop_path}`} alt='' />
-      
+    
       <Card>
+        <Card.Img src={`${API_IMAGE_URL}/${backdrop_sizes[3]}${movie.backdrop_path}`} alt='backdrop' />
         <Card.Body>
         <div className='Info'>
         <Row>
@@ -106,22 +137,7 @@ function MovieDetailPage() {
                 </div>
               </Col>    
                 </Row>
-                <Button variant="warning" data-toggle="modal" data-target="#trailer">Watch Trailer</Button>
-                <Modal.Dialog id="trailer">
-                  <Modal.Header closeButton>
-                  <Modal.Title>Trailers</Modal.Title>
-                  </Modal.Header>
-
-                  <Modal.Body>
-                  {movie.videos &&
-                  movie.videos.results.slice(0, 5).map((video, index) => (
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.key}?rel=0`}
-                        title={video.name}
-                      ></iframe>
-                  ))}
-                  </Modal.Body>
-                </Modal.Dialog>
+                <Button variant="warning" onClick={PlayTrailer}>Watch Trailer</Button>
                 
           </Col>
               </Row>
@@ -157,6 +173,6 @@ function MovieDetailPage() {
     </div>
 
   );
-}
+} 
 
 export default MovieDetailPage;
