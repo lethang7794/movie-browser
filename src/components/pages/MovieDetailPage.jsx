@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Row, Col, Badge, Card, Modal, Button } from 'react-bootstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
@@ -49,50 +52,85 @@ function MovieDetailPage() {
     movie.revenue > 0 ? `${formatter.format(movie.revenue)}` : null;
   let movieRuntime = `${Math.floor(movie.runtime / 60)}h ${
     movie.runtime % 60
-  }m`;
+    }m`;
+ 
 
   return (
     <div className='MovieDetail'>
-      <div className='Info'>
-        <div>
+      <img src={`${API_IMAGE_URL}/${backdrop_sizes[4]}${movie.backdrop_path}`} alt='' />
+      
+      <Card>
+        <Card.Body>
+        <div className='Info'>
+        <Row>
+          <Col sm={4}>
           <img
-            src={`${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`}
+            src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
             alt=''
-          />
-          <img
-            src={`${API_IMAGE_URL}/${poster_sizes[2]}${movie.poster_path}`}
-            alt=''
-          />
-        </div>
-        <div className='title'>{movie.title}</div>
-        <div className='release-year'>{movieReleaseYear}</div>
-        <ul className='genres'>
-          {movie.genres &&
-            movie.genres.map((genre) => (
-              <li key={genre.id} className='genre'>
+              />
+          </Col>
+        
+        
+          <Col sm={8}>
+            <h1>{movie.title}</h1>
+            <h3>{movie.tagline}</h3>
+            
+            {movie.genres && movie.genres.map((genre) => (
+              <Badge variant="warning" className="p-2 mr-1">
                 {genre.name}
-              </li>
+              </Badge>
             ))}
-        </ul>
-        <div className='runtime'>{movieRuntime}</div>
-        <div className='rating'>{movie.vote_average}</div>
-        <div className='tagline'>{movie.tagline}</div>
-        <div className='overview'>{movie.overview}</div>
-      </div>
-      <div className='Facts'>
-        <div>{movie.original_language}</div>
-        <div>{movieBudget}</div>
-        <div>{movieRevenue}</div>
-        <div>
-          <ul>
-            {movie.keywords &&
-              movie.keywords.keywords.map((keyword) => (
-                <li key={keyword.id}>{keyword.name}</li>
-              ))}
-          </ul>
-        </div>
-      </div>
-      <ul className='images'>
+          <hr/>   
+          <p><strong>Overview:</strong><br/>
+              {movie.overview}</p>
+                  <hr />
+                  
+          <Row>  
+              <Col sm={3}>
+                <p>Release on: {movieReleaseYear}<br />
+                  Runtime: {movieRuntime}<br/>
+                  Rating: {movie.vote_average}</p>
+              </Col>
+              
+              <Col sm={5}>              
+                <div className='Facts'>
+                <p>Original Language: {movie.original_language}<br/>
+                Movie Budget: {movieBudget} <br/>
+                Movie Revenue: {movieRevenue}</p>
+                  
+                {/* <p>Keyword:</p>
+                {movie.keywords &&
+                    movie.keywords.keywords.map((keyword) => (
+                    <p>{keyword.name}</p>
+                    ))} */}
+                </div>
+              </Col>    
+                </Row>
+                <Button variant="warning" data-toggle="modal" data-target="#trailer">Watch Trailer</Button>
+                <Modal.Dialog id="trailer">
+                  <Modal.Header closeButton>
+                  <Modal.Title>Trailers</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body>
+                  {movie.videos &&
+                  movie.videos.results.slice(0, 5).map((video, index) => (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.key}?rel=0`}
+                        title={video.name}
+                      ></iframe>
+                  ))}
+                  </Modal.Body>
+                </Modal.Dialog>
+                
+          </Col>
+              </Row>
+              </div>
+          </Card.Body>
+          </Card>
+        
+          
+      {/* <ul className='images'>
         {movie.images &&
           movie.images.backdrops.slice(1, 6).map((image, index) => (
             <li key={index}>
@@ -115,8 +153,9 @@ function MovieDetailPage() {
               </div>
             </li>
           ))}
-      </ul>
+        </ul>  */}
     </div>
+
   );
 }
 
