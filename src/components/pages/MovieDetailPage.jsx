@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Badge, Card, Modal, Button } from 'react-bootstrap';
-import "bootstrap/dist/css/bootstrap.min.css";
-
+import { Row, Col, Badge, Card, Modal, Button, Image } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
@@ -22,8 +21,10 @@ const poster_sizes = [
 function MovieDetailPage() {
   const { moviePath } = useParams();
   const [movie, setMovie] = useState(null);
-  const [show, setShow] = useState(false);
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     async function fetchMovie() {
@@ -54,98 +55,86 @@ function MovieDetailPage() {
     movie.revenue > 0 ? `${formatter.format(movie.revenue)}` : null;
   let movieRuntime = `${Math.floor(movie.runtime / 60)}h ${
     movie.runtime % 60
-    }m`;
- 
-  
-  const PlayTrailer = () => {
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-      <div>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-
-        <div>
-            <Modal.Dialog id="trailer">
-                    <Modal.Title>Trailers</Modal.Title>
-
-                    <Modal.Body>
-                    {movie.videos &&
-                    movie.videos.results.slice(0, 5).map((video, index) => (
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.key}?rel=0`}
-                          title={video.name}
-                        ></iframe>
-                    ))}
-                    </Modal.Body>
-                  </Modal.Dialog>
-          </div>
-      </div>
-    );
-  }
+  }m`;
 
   return (
     <div className='MovieDetail'>
-    
-      <Card>
-        <Card.Img src={`${API_IMAGE_URL}/${backdrop_sizes[3]}${movie.backdrop_path}`} alt='backdrop' />
-        <Card.Body>
-        <div className='Info'>
+      <Card style={{ border: '0px' }}>
         <Row>
-          <Col sm={4}>
-          <img
-            src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
-            alt=''
+          <Col xs={12} md={{ span: 8, offset: 2 }}>
+            <div className='ratio ratio-16x9'>
+              <Card.Img
+                src={`${API_IMAGE_URL}/${backdrop_sizes[3]}${movie.backdrop_path}`}
+                alt='backdrop'
               />
+            </div>
           </Col>
-        
-        
-          <Col sm={8}>
-            <h1>{movie.title}</h1>
-            <h3>{movie.tagline}</h3>
-            
-            {movie.genres && movie.genres.map((genre) => (
-              <Badge variant="warning" className="p-2 mr-1">
-                {genre.name}
-              </Badge>
-            ))}
-          <hr/>   
-          <p><strong>Overview:</strong><br/>
-              {movie.overview}</p>
-                  <hr />
-                  
-          <Row>  
-              <Col sm={3}>
-                <p>Release on: {movieReleaseYear}<br />
-                  Runtime: {movieRuntime}<br/>
-                  Rating: {movie.vote_average}</p>
-              </Col>
-              
-              <Col sm={5}>              
-                <div className='Facts'>
-                <p>Original Language: {movie.original_language}<br/>
-                Movie Budget: {movieBudget} <br/>
-                Movie Revenue: {movieRevenue}</p>
-                  
-                {/* <p>Keyword:</p>
-                {movie.keywords &&
-                    movie.keywords.keywords.map((keyword) => (
-                    <p>{keyword.name}</p>
-                    ))} */}
+        </Row>
+
+        <Card.Body className='px-0'>
+          <div className='Info'>
+            <Row>
+              <Col
+                xs={12}
+                lg={{ span: 3, offset: 2 }}
+                className='d-none d-lg-block'
+              >
+                <div className='ratio ratio-3x2'>
+                  <Image
+                    src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
+                    alt=''
+                  />
                 </div>
-              </Col>    
+              </Col>
+
+              <Col xs={12} lg={5}>
+                <h1>{movie.title}</h1>
+                <h3>{movie.tagline}</h3>
+
+                {movie.genres &&
+                  movie.genres.map((genre, index) => (
+                    <Badge variant='secondary' className='p-2 mr-1' key={index}>
+                      {genre.name}
+                    </Badge>
+                  ))}
+                <hr />
+                <p>
+                  <strong>Overview:</strong>
+                  <br />
+                  {movie.overview}
+                </p>
+                <Button variant='primary' onClick={handleShow} className=''>
+                  Watch Trailer
+                </Button>
+                <hr />
+
+                <Row>
+                  <Col sm={6}>
+                    <div>Release on: {movieReleaseYear}</div>
+                    <div>Runtime: {movieRuntime}</div>
+                    <div>Rating: {movie.vote_average}</div>
+                  </Col>
+
+                  <Col sm={6}>
+                    <div className='Facts'>
+                      <div>Original Language: {movie.original_language}</div>
+                      <div>Movie Budget: {movieBudget}</div>
+                      <div>Movie Revenue: {movieRevenue}</div>
+
+                      {/* <p>Keyword:</p>
+                      {movie.keywords &&
+                      movie.keywords.keywords.map((keyword) => (
+                      <p>{keyword.name}</p>
+                      ))} */}
+                    </div>
+                  </Col>
                 </Row>
-                <Button variant="warning" onClick={PlayTrailer}>Watch Trailer</Button>
-                
-          </Col>
-              </Row>
-              </div>
-          </Card.Body>
-          </Card>
-        
-          
+              </Col>
+            </Row>
+          </div>
+        </Card.Body>
+      </Card>
+
       {/* <ul className='images'>
         {movie.images &&
           movie.images.backdrops.slice(1, 6).map((image, index) => (
@@ -170,9 +159,48 @@ function MovieDetailPage() {
             </li>
           ))}
         </ul>  */}
-    </div>
 
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered
+        dialogClassName='trailer-modal'
+      >
+        <Modal closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal>
+        <Modal.Body className='p-0'>
+          {movie.videos &&
+            movie.videos.results.slice(0, 1).map((video, index) => (
+              <div
+                className='ratio ratio-16x9'
+                key={index}
+                style={{ maxWidth: '150vh' }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.key}?rel=0&autoplay=1`}
+                  title={video.name}
+                  frameBorder='0'
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ))}
+        </Modal.Body>
+        <Modal.Footer className='p-0 justify-content-center'>
+          <Button
+            variant='secondary'
+            onClick={handleClose}
+            className='position-absolute'
+            style={{
+              bottom: '-3rem',
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
-} 
+}
 
 export default MovieDetailPage;

@@ -1,2 +1,27 @@
 .App {
 }
+
+.trailer-modal {
+  max-width: 150vh;
+}
+
+@media (max-width: 567.98px) {
+  .trailer-modal {
+    max-width: 100vw;
+    margin-left: 0px;
+    margin-right: -17px;
+  }
+}
+
+.trailer-modal .modal-content {
+  border: 0px;
+  margin: -1px;
+}
+
+.trailer-modal .modal-content .modal-header {
+  border-bottom: 0px;
+}
+
+.trailer-modal .modal-content .modal-footer {
+  border-top: 0px;
+}
