@@ -158,11 +158,9 @@ const MovieListPage = ({ type }) => {
           </p>
         </Col>
         <>
-          {(location.pathname === '/search' || totalPages) && (
+          {(location.pathname === '/search' || !isLoading) && (
             <Form
               inline
-              className='position-sticky'
-              style={{ top: 0 }}
               onSubmit={(e) => {
                 e.preventDefault();
               }}
@@ -213,7 +211,7 @@ const MovieListPage = ({ type }) => {
                 filterTerm === searchTerm) ||
               (movies.length > 0 && filterTerm === '' && !hasPagination)) && (
               <div className='LoadMore'>
-                {totalPages && page !== totalPages && (
+                {totalPages > 0 && page !== totalPages && (
                   <Button
                     onClick={() => {
                       setPage((page) => page + 1);
