@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Row, Col, Badge, Card, Modal, Button, Image } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
@@ -19,6 +21,10 @@ const poster_sizes = [
 function MovieDetailPage() {
   const { moviePath } = useParams();
   const [movie, setMovie] = useState(null);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     async function fetchMovie() {
@@ -53,46 +59,83 @@ function MovieDetailPage() {
 
   return (
     <div className='MovieDetail'>
-      <div className='Info'>
-        <div>
-          <img
-            src={`${API_IMAGE_URL}/${backdrop_sizes[0]}${movie.backdrop_path}`}
-            alt=''
-          />
-          <img
-            src={`${API_IMAGE_URL}/${poster_sizes[2]}${movie.poster_path}`}
-            alt=''
-          />
-        </div>
-        <div className='title'>{movie.title}</div>
-        <div className='release-year'>{movieReleaseYear}</div>
-        <ul className='genres'>
-          {movie.genres &&
-            movie.genres.map((genre) => (
-              <li key={genre.id} className='genre'>
-                {genre.name}
-              </li>
-            ))}
-        </ul>
-        <div className='runtime'>{movieRuntime}</div>
-        <div className='rating'>{movie.vote_average}</div>
-        <div className='tagline'>{movie.tagline}</div>
-        <div className='overview'>{movie.overview}</div>
-      </div>
-      <div className='Facts'>
-        <div>{movie.original_language}</div>
-        <div>{movieBudget}</div>
-        <div>{movieRevenue}</div>
-        <div>
-          <ul>
-            {movie.keywords &&
-              movie.keywords.keywords.map((keyword) => (
-                <li key={keyword.id}>{keyword.name}</li>
-              ))}
-          </ul>
-        </div>
-      </div>
-      <ul className='images'>
+      <Card style={{ border: '0px' }}>
+        <Row>
+          <Col xs={12} md={{ span: 8, offset: 2 }}>
+            <div className='ratio ratio-16x9'>
+              <Card.Img
+                src={`${API_IMAGE_URL}/${backdrop_sizes[3]}${movie.backdrop_path}`}
+                alt='backdrop'
+              />
+            </div>
+          </Col>
+        </Row>
+
+        <Card.Body className='px-0'>
+          <div className='Info'>
+            <Row>
+              <Col
+                xs={12}
+                lg={{ span: 3, offset: 2 }}
+                className='d-none d-lg-block'
+              >
+                <div className='ratio ratio-3x2'>
+                  <Image
+                    src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
+                    alt=''
+                  />
+                </div>
+              </Col>
+
+              <Col xs={12} lg={5}>
+                <h1>{movie.title}</h1>
+                <h3>{movie.tagline}</h3>
+
+                {movie.genres &&
+                  movie.genres.map((genre, index) => (
+                    <Badge variant='secondary' className='p-2 mr-1' key={index}>
+                      {genre.name}
+                    </Badge>
+                  ))}
+                <hr />
+                <p>
+                  <strong>Overview:</strong>
+                  <br />
+                  {movie.overview}
+                </p>
+                <Button variant='primary' onClick={handleShow} className=''>
+                  Watch Trailer
+                </Button>
+                <hr />
+
+                <Row>
+                  <Col sm={6}>
+                    <div>Release on: {movieReleaseYear}</div>
+                    <div>Runtime: {movieRuntime}</div>
+                    <div>Rating: {movie.vote_average}</div>
+                  </Col>
+
+                  <Col sm={6}>
+                    <div className='Facts'>
+                      <div>Original Language: {movie.original_language}</div>
+                      <div>Movie Budget: {movieBudget}</div>
+                      <div>Movie Revenue: {movieRevenue}</div>
+
+                      {/* <p>Keyword:</p>
+                      {movie.keywords &&
+                      movie.keywords.keywords.map((keyword) => (
+                      <p>{keyword.name}</p>
+                      ))} */}
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* <ul className='images'>
         {movie.images &&
           movie.images.backdrops.slice(1, 6).map((image, index) => (
             <li key={index}>
@@ -115,7 +158,47 @@ function MovieDetailPage() {
               </div>
             </li>
           ))}
-      </ul>
+        </ul>  */}
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered
+        dialogClassName='trailer-modal'
+      >
+        <Modal closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal>
+        <Modal.Body className='p-0'>
+          {movie.videos &&
+            movie.videos.results.slice(0, 1).map((video, index) => (
+              <div
+                className='ratio ratio-16x9'
+                key={index}
+                style={{ maxWidth: '150vh' }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.key}?rel=0&autoplay=1`}
+                  title={video.name}
+                  frameBorder='0'
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ))}
+        </Modal.Body>
+        <Modal.Footer className='p-0 justify-content-center'>
+          <Button
+            variant='secondary'
+            onClick={handleClose}
+            className='position-absolute'
+            style={{
+              bottom: '-3rem',
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
