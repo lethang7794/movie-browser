@@ -58,7 +58,7 @@ const MovieListPage = ({ type }) => {
 
   useEffect(() => {
     async function fetchMovies() {
-      hasPagination && setIsLoading(true);
+      setIsLoading(true);
       let newEndpoint;
       if (movieLists.hasOwnProperty(type) && type !== 'now_playing') {
         newEndpoint = movieLists[type].endpoint;
@@ -112,10 +112,9 @@ const MovieListPage = ({ type }) => {
         setEndpoint(newEndpoint);
       }
 
-      hasPagination &&
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
 
     fetchMovies();
@@ -146,6 +145,21 @@ const MovieListPage = ({ type }) => {
     setPage(1);
   };
 
+  const shouldShowLoadMore =
+    (location.pathname !== '/now-playing' &&
+      location.pathname !== '/search' &&
+      filteredMovies.length > 0) ||
+    (location.pathname === '/search' &&
+      searchTerm !== '' &&
+      totalPages > 1 &&
+      filterTerm === searchTerm);
+
+  const shouldShowPagination =
+    (filteredMovies.length > 0 || filterTerm === '') &&
+    hasPagination &&
+    !isLoading &&
+    totalPages > 0;
+
   return (
     <div className='MovieListPage'>
       <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
@@ -158,7 +172,7 @@ const MovieListPage = ({ type }) => {
           </p>
         </Col>
         <>
-          {(location.pathname === '/search' || !isLoading) && (
+          {(location.pathname === '/search' || movieLists[movieListType]) && (
             <Form
               inline
               onSubmit={(e) => {
@@ -203,55 +217,44 @@ const MovieListPage = ({ type }) => {
         <Col>
           <>
             {/* LOAD MORE BUTTON */}
-            {((location.pathname !== '/now-playing' &&
-              location.pathname !== '/search') ||
-              (location.pathname === '/search' &&
-                searchTerm !== '' &&
-                totalPages > 1 &&
-                filterTerm === searchTerm) ||
-              (movies.length > 0 && filterTerm === '' && !hasPagination)) && (
-              <div className='LoadMore'>
-                {totalPages > 0 && page !== totalPages && (
-                  <Button
-                    onClick={() => {
-                      setPage((page) => page + 1);
-                    }}
-                    className='d-block w-100'
-                  >
-                    See More
-                  </Button>
-                )}
-              </div>
-            )}
+            <div className='LoadMore'>
+              {shouldShowLoadMore && (
+                <Button
+                  onClick={() => {
+                    setPage((page) => page + 1);
+                  }}
+                  className='d-block w-100'
+                >
+                  {isLoading ? 'Loading' : 'See More'}
+                </Button>
+              )}
+            </div>
           </>
 
           <>
             {/* PAGINATION */}
-            {(movies.length > 0 || filterTerm === '') &&
-              hasPagination &&
-              !isLoading &&
-              totalPages && (
-                <div className='Pagination d-flex justify-content-between'>
-                  <Button
-                    id='Previous'
-                    onClick={(e) => setPage((page) => page - 1)}
-                    disabled={page === 1 ? true : false}
-                    style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    id='Next'
-                    onClick={(e) => setPage((page) => page + 1)}
-                    disabled={page === totalPages ? true : false}
-                    style={{
-                      visibility: `${page === totalPages ? 'hidden' : null}`,
-                    }}
-                  >
-                    Next
-                  </Button>
-                </div>
-              )}
+            {shouldShowPagination && (
+              <div className='Pagination d-flex justify-content-between'>
+                <Button
+                  id='Previous'
+                  onClick={(e) => setPage((page) => page - 1)}
+                  disabled={page === 1 ? true : false}
+                  style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
+                >
+                  Previous
+                </Button>
+                <Button
+                  id='Next'
+                  onClick={(e) => setPage((page) => page + 1)}
+                  disabled={page === totalPages ? true : false}
+                  style={{
+                    visibility: `${page === totalPages ? 'hidden' : null}`,
+                  }}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
           </>
 
           <>
@@ -263,6 +266,9 @@ const MovieListPage = ({ type }) => {
                   <span>There is no movie whose title includes</span>
                   <strong> {filterTerm} </strong>
                   <span>here.</span>
+                  <div>
+                    Click search to look for all movies in our database.
+                  </div>
                 </h2>
               )}
           </>

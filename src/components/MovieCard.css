@@ -3,6 +3,11 @@
   text-decoration: none;
 }
 
+.MovieCard {
+  box-shadow: 0 0.7px 0.9px rgb(0 0 0 / 2%), 0 1.9px 2.4px rgb(0 0 0 / 4%),
+    0 4.5px 5.7px rgb(0 0 0 / 5%), 0 15px 19px rgb(0 0 0 / 7%);
+}
+
 /* Fallback when image can't be loaded */
 .MovieCard .img-wrapper {
   background-color: lightgray;
