@@ -1,0 +1,44 @@
+.SliderWrapper {
+  padding: 0 1rem;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+}
+
+.slick-dots.slick-thumb {
+  padding-top: 1rem;
+}
+
+.slick-dots {
+  position: static;
+  padding-bottom: 1rem;
+}
+
+.slick-dots li {
+  width: 50px;
+  height: 30px;
+  transform: scale(0.9);
+  transition: transform 0.15s linear;
+}
+
+.slick-dots li.slick-active {
+  transform: scale(1.1);
+  transition: transform 0.3s linear;
+}
+
+.slick-slide {
+  transform: scale(0.9);
+  transition: transform 0.3s linear;
+}
+
+.slick-slide.slick-current {
+  transform: scale(1);
+  transition: transform 0.15s linear;
+}
+
+.slick-slide img {
+  width: 100%;
+  margin: 0 auto;
+}
