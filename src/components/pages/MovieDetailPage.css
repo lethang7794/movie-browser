@@ -64,3 +64,11 @@
   transform: scale(1.05);
   transition: transform 0.3s linear;
 }
+
+.svg-inline--fa {
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: unset;
+}
