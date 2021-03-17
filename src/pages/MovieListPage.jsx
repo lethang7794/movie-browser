@@ -58,7 +58,6 @@ const MovieListPage = ({ type }) => {
 
   useEffect(() => {
     async function fetchMovies() {
-      setIsLoading(true);
       let newEndpoint;
       if (movieLists.hasOwnProperty(type) && type !== 'now_playing') {
         newEndpoint = movieLists[type].endpoint;
@@ -66,7 +65,11 @@ const MovieListPage = ({ type }) => {
       } else {
         newEndpoint = movieLists.now_playing.endpoint;
         setHasPagination(true);
+        window.scrollTo(0, 0);
       }
+
+      setIsLoading(true);
+
       // Reset page to 1 if changed to different endpoint
       let newPage = page;
       if (newEndpoint !== endpoint) {
