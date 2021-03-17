@@ -48,6 +48,7 @@ function MovieCard({ movie }) {
       <Card className='MovieCard' style={{ height: '100%' }}>
         <div className='img-wrapper ratio ratio-16x9'>
           <Card.Img variant='top' src={movieImageSrc} className='backdrop' />
+          <div className='move__image__overlay'></div>
         </div>
         <Card.Body>
           <Card.Title>
