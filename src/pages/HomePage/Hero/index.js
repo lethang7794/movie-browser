@@ -56,7 +56,7 @@ const Hero = () => {
 
   return (
     <div className='Hero containter-fluid position-relative'>
-      <div class='darker__overlay full-stretch'></div>
+      <div class='dark__overlay full-stretch'></div>
       <Row>
         <Col xs={12} lg={{ span: 8, offset: 2 }}>
           <div className='SliderWrapper ratio ratio-16x9'>
