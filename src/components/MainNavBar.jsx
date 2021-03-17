@@ -5,7 +5,7 @@ import coderSchoolLogo from '../images/CoderSchool-Logo.svg';
 import githubMark from '../images/GitHub-Mark-64px.png';
 
 const MainNavBar = () => (
-  <Navbar bg='light' expand='lg'>
+  <Navbar bg='light' expand='lg' style={{ height: '80px' }}>
     <Navbar.Brand>
       <img src={coderSchoolLogo} alt='CoderSchool' width='200px' />
     </Navbar.Brand>

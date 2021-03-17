@@ -55,7 +55,7 @@ const Hero = () => {
   };
 
   return (
-    <div className='Hero'>
+    <div className='Hero containter-fluid'>
       <Row>
         <Col xs={12} lg={{ span: 8, offset: 2 }}>
           <div className='SliderWrapper ratio ratio-16x9'>
