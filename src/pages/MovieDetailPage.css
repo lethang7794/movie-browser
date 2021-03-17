@@ -115,3 +115,7 @@
   overflow: visible;
   vertical-align: unset;
 }
+
+.modal-backdrop.show {
+  opacity: 0.9;
+}
