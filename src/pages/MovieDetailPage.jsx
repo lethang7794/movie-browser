@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Card, Modal, Button, Image } from 'react-bootstrap';
+import { Row, Col, Modal, Button, Image, Container } from 'react-bootstrap';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './MovieDetailPage.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
@@ -64,17 +63,17 @@ function MovieDetailPage() {
   const settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    className: 'center',
-    centerMode: true,
-    centerPadding: '60px',
+    // className: 'center',
+    // centerMode: true,
+    // centerPadding: '60px',
     swipeToSlide: true,
     focusOnSelect: true,
     lazyLoad: true,
     infinite: false,
     // autoplay: true,
-    // autoplayspeed: 3000,
-    // pauseOnHover: true,
-    speed: 1000,
+    autoplayspeed: 2000,
+    pauseOnHover: true,
+    speed: 0,
     dots: true,
     dotsClass: 'slick-dots slick-thumb',
     customPaging: function (i) {
@@ -91,86 +90,77 @@ function MovieDetailPage() {
   };
 
   return (
-    <>
-      <div className='MovieDetail'>
-        <Card style={{ border: '0px' }}>
-          <Card.Body className='px-0'>
-            <div className='Info'>
-              <Row>
-                <Col
-                  xs={3}
-                  lg={{ span: 3, offset: 2 }}
-                  // className='d-none d-lg-block'
-                >
-                  <div className='ratio ratio-3x2'>
-                    <Image
-                      src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
-                      alt=''
-                    />
-                  </div>
-                </Col>
+    <div className='MovieDetailPage page'>
+      <Container>
+        <Row className='Info'>
+          <Col
+            xs={3}
+            lg={{ span: 3, offset: 2 }}
+            // className='d-none d-lg-block'
+          >
+            <div className='ratio ratio-3x2'>
+              <Image
+                src={`${API_IMAGE_URL}/${poster_sizes[3]}${movie.poster_path}`}
+                alt=''
+              />
+            </div>
+          </Col>
 
-                <Col xs={9} lg={5}>
-                  <h2 className='mb-0'>
-                    {movie.title}
-                    <span
-                      className='font-weight-light'
-                      style={{ color: 'rgba(0,0,0,0.6)' }}
-                    >{` (${movieReleaseYear})`}</span>
-                  </h2>
-                  <div>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      aria-hidden='true'
-                      focusable='false'
-                      data-prefix='fas'
-                      data-icon='star'
-                      className='svg-inline--fa fa-star fa-w-18'
-                      role='img'
-                      viewBox='0 0 576 512'
-                      color='gold'
-                    >
-                      <path
-                        fill='currentColor'
-                        d='M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z'
-                      />
-                    </svg>
-                    <strong style={{ fontSize: '25px' }}>
-                      {movie.vote_average}
-                    </strong>
-                    <span
-                      style={{ color: 'rgba(0,0,0,0.6)', fontSize: '16px' }}
-                    >
-                      /10
+          <Col xs={9} lg={5}>
+            <h2 className='mb-0'>
+              {movie.title}
+              <span
+                className='font-weight-light'
+                style={{ color: 'rgba(0,0,0,0.6)' }}
+              >{` (${movieReleaseYear})`}</span>
+            </h2>
+            <div>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+                focusable='false'
+                data-prefix='fas'
+                data-icon='star'
+                className='svg-inline--fa fa-star fa-w-18'
+                role='img'
+                viewBox='0 0 576 512'
+                color='gold'
+              >
+                <path
+                  fill='currentColor'
+                  d='M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z'
+                />
+              </svg>
+              <strong style={{ fontSize: '25px' }}>{movie.vote_average}</strong>
+              <span style={{ color: 'rgba(0,0,0,0.6)', fontSize: '16px' }}>
+                /10
+              </span>
+            </div>
+            <div style={{ color: 'rgba(0,0,0,0.6)' }}>
+              <span className='genres'>
+                {movie.genres &&
+                  movie.genres.map((genre, index) => (
+                    <span style={{ color: 'rgba(0,0,0,0.6)' }}>
+                      {genre.name +
+                        `${index === movie.genres.length - 1 ? '' : ', '}`}
                     </span>
-                  </div>
-                  <div style={{ color: 'rgba(0,0,0,0.6)' }}>
-                    <span className='genres'>
-                      {movie.genres &&
-                        movie.genres.map((genre, index) => (
-                          <span style={{ color: 'rgba(0,0,0,0.6)' }}>
-                            {genre.name +
-                              `${
-                                index === movie.genres.length - 1 ? '' : ', '
-                              }`}
-                          </span>
-                        ))}
-                    </span>
-                    <span className='mx-1' style={{ color: '#ccc' }}>
-                      |
-                    </span>
-                    <span className='runtime'>{movieRuntime}</span>
-                  </div>
-                  <div>
-                    <h3 className='font-italic mt-2'>{movie.tagline}</h3>
-                    <p style={{ fontSize: '0.75rem' }}>{movie.overview}</p>
-                  </div>
-                  <Button variant='primary' onClick={handleShow} className=''>
-                    Watch Trailer
-                  </Button>
-                  <hr />
+                  ))}
+              </span>
+              <span className='mx-1' style={{ color: '#ccc' }}>
+                |
+              </span>
+              <span className='runtime'>{movieRuntime}</span>
+            </div>
+            <div>
+              <h3 className='font-italic mt-2'>{movie.tagline}</h3>
+              <p style={{ fontSize: '0.75rem' }}>{movie.overview}</p>
+            </div>
+            <Button variant='primary' onClick={handleShow} className=''>
+              Watch Trailer
+            </Button>
+            <hr />
 
-                  {/* <Row>
+            {/* <Row>
                     <Col sm={6}>
                       <div className='Facts'>
                         <div>Original Language: {movie.original_language}</div>
@@ -185,11 +175,8 @@ function MovieDetailPage() {
                       </div>
                     </Col>
                   </Row> */}
-                </Col>
-              </Row>
-            </div>
-          </Card.Body>
-        </Card>
+          </Col>
+        </Row>
 
         {/* <ul className='images'>
         {movie.images &&
@@ -273,8 +260,8 @@ function MovieDetailPage() {
             </Button>
           </Modal.Footer>
         </Modal>
-      </div>
-    </>
+      </Container>
+    </div>
   );
 }
 

@@ -1,0 +1,122 @@
+.Hero {
+  background-color: #cb6530;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.Hero .move__image__overlay {
+  background-image: radial-gradient(
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 0% 75%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1;
+  height: auto !important;
+  width: auto !important;
+}
+
+.slick-prev {
+  left: 2rem;
+}
+
+.slick-next {
+  right: 2rem;
+}
+
+.slick-next {
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: white;
+  font-size: 3rem;
+  opacity: 1;
+  /* background-color: white; */
+  /* line-height: 0px; */
+}
+
+.slick-dots li button:before {
+  color: white;
+  opacity: 1;
+}
+
+/* Slider info */
+.Hero .movie__link {
+  text-decoration: none;
+}
+
+.Hero .movie__info {
+  position: absolute;
+  padding: 1rem 1.5rem;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.Hero .movie__title,
+.Hero .movie__overview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Hero .movie__title {
+  font-size: 2.5rem;
+}
+
+.Hero .movie__overview {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  color: rgb(175, 175, 175);
+}
+
+@media (max-width: 767.98px) {
+  .Hero .movie__info {
+    padding: 0 0.5rem 0.25rem;
+  }
+
+  .Hero .movie__title {
+    font-size: 1.5rem;
+  }
+
+  .Hero .movie__overview {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .slick-prev {
+    left: 1rem;
+  }
+
+  .slick-next {
+    right: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .Hero .movie__info {
+    padding: 0.5rem;
+  }
+
+  .Hero .movie__title {
+  }
+
+  .Hero .movie__overview {
+    margin: 0;
+  }
+}

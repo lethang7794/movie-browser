@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Form } from 'react-bootstrap';
+import { Row, Col, Button, Form, Container } from 'react-bootstrap';
 import './MovieListPage.css';
 import MovieCard from '../components/MovieCard';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -161,126 +161,129 @@ const MovieListPage = ({ type }) => {
     totalPages > 0;
 
   return (
-    <div className='MovieListPage'>
-      <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
-        <Col lg={6}>
-          <h1 className='text-center'>
-            {movieLists[movieListType] && movieLists[movieListType].title}
-          </h1>
-          <p className='text-center'>
-            {movieLists[movieListType] && movieLists[movieListType].description}
-          </p>
-        </Col>
-        <>
-          {(location.pathname === '/search' || movieLists[movieListType]) && (
-            <Form
-              inline
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <Form.Label htmlFor='searchForm' srOnly>
-                Movie
-              </Form.Label>
-              <Form.Control
-                className='mb-2 mr-sm-2'
-                id='searchForm'
-                placeholder=''
-                onChange={(e) => {
-                  setFilterTerm(e.target.value);
+    <div className='MovieListPage page'>
+      <Container>
+        <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
+          <Col lg={6}>
+            <h1 className='text-center'>
+              {movieLists[movieListType] && movieLists[movieListType].title}
+            </h1>
+            <p className='text-center'>
+              {movieLists[movieListType] &&
+                movieLists[movieListType].description}
+            </p>
+          </Col>
+          <>
+            {(location.pathname === '/search' || movieLists[movieListType]) && (
+              <Form
+                inline
+                onSubmit={(e) => {
+                  e.preventDefault();
                 }}
-                value={filterTerm}
-              />
-              <Button type='submit' className='mb-2' onClick={handleSearch}>
-                Search 🔎
-              </Button>
-            </Form>
-          )}
-        </>
-      </Row>
-      <Row className='MovieList'>
-        <>
-          {!hasPagination ? (
-            <>{showMovies(filteredMovies)}</>
-          ) : (
+              >
+                <Form.Label htmlFor='searchForm' srOnly>
+                  Movie
+                </Form.Label>
+                <Form.Control
+                  className='mb-2 mr-sm-2'
+                  id='searchForm'
+                  placeholder=''
+                  onChange={(e) => {
+                    setFilterTerm(e.target.value);
+                  }}
+                  value={filterTerm}
+                />
+                <Button type='submit' className='mb-2' onClick={handleSearch}>
+                  Search 🔎
+                </Button>
+              </Form>
+            )}
+          </>
+        </Row>
+        <Row className='MovieList'>
+          <>
+            {!hasPagination ? (
+              <>{showMovies(filteredMovies)}</>
+            ) : (
+              <>
+                {isLoading ? (
+                  <h1 className='w-100 mt-5 text-center'>Loading</h1>
+                ) : (
+                  <>{showMovies(filteredMovies)}</>
+                )}
+              </>
+            )}
+          </>
+        </Row>
+        <Row className='pb-5'>
+          <Col>
             <>
-              {isLoading ? (
-                <h1 className='w-100 mt-5 text-center'>Loading</h1>
-              ) : (
-                <>{showMovies(filteredMovies)}</>
+              {/* LOAD MORE BUTTON */}
+              <div className='LoadMore'>
+                {shouldShowLoadMore && (
+                  <Button
+                    onClick={() => {
+                      setPage((page) => page + 1);
+                    }}
+                    className='d-block w-100'
+                  >
+                    {isLoading ? 'Loading' : 'See More'}
+                  </Button>
+                )}
+              </div>
+            </>
+
+            <>
+              {/* PAGINATION */}
+              {shouldShowPagination && (
+                <div className='Pagination d-flex justify-content-between'>
+                  <Button
+                    id='Previous'
+                    onClick={(e) => setPage((page) => page - 1)}
+                    disabled={page === 1 ? true : false}
+                    style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    id='Next'
+                    onClick={(e) => setPage((page) => page + 1)}
+                    disabled={page === totalPages ? true : false}
+                    style={{
+                      visibility: `${page === totalPages ? 'hidden' : null}`,
+                    }}
+                  >
+                    Next
+                  </Button>
+                </div>
               )}
             </>
-          )}
-        </>
-      </Row>
-      <Row className='mb-5'>
-        <Col>
-          <>
-            {/* LOAD MORE BUTTON */}
-            <div className='LoadMore'>
-              {shouldShowLoadMore && (
-                <Button
-                  onClick={() => {
-                    setPage((page) => page + 1);
-                  }}
-                  className='d-block w-100'
-                >
-                  {isLoading ? 'Loading' : 'See More'}
-                </Button>
-              )}
-            </div>
-          </>
 
-          <>
-            {/* PAGINATION */}
-            {shouldShowPagination && (
-              <div className='Pagination d-flex justify-content-between'>
-                <Button
-                  id='Previous'
-                  onClick={(e) => setPage((page) => page - 1)}
-                  disabled={page === 1 ? true : false}
-                  style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
-                >
-                  Previous
-                </Button>
-                <Button
-                  id='Next'
-                  onClick={(e) => setPage((page) => page + 1)}
-                  disabled={page === totalPages ? true : false}
-                  style={{
-                    visibility: `${page === totalPages ? 'hidden' : null}`,
-                  }}
-                >
-                  Next
-                </Button>
-              </div>
-            )}
-          </>
-
-          <>
-            {/* SEARCH ALL */}
-            {location.pathname !== '/search' &&
-              filterTerm !== '' &&
-              filteredMovies.length === 0 && (
+            <>
+              {/* SEARCH ALL */}
+              {location.pathname !== '/search' &&
+                filterTerm !== '' &&
+                filteredMovies.length === 0 && (
+                  <h2 className='text-center font-weight-normal mt-5'>
+                    <span>There is no movie whose title includes</span>
+                    <strong> {filterTerm} </strong>
+                    <span>here.</span>
+                    <div>
+                      Click search to look for all movies in our database.
+                    </div>
+                  </h2>
+                )}
+            </>
+            <>
+              {location.pathname === '/search' && filteredMovies.length === 0 && (
                 <h2 className='text-center font-weight-normal mt-5'>
-                  <span>There is no movie whose title includes</span>
-                  <strong> {filterTerm} </strong>
-                  <span>here.</span>
-                  <div>
-                    Click search to look for all movies in our database.
-                  </div>
+                  <span>Whatever movie you wanna.</span>
                 </h2>
               )}
-          </>
-          <>
-            {location.pathname === '/search' && filteredMovies.length === 0 && (
-              <h2 className='text-center font-weight-normal mt-5'>
-                <span>Whatever movie you wanna.</span>
-              </h2>
-            )}
-          </>
-        </Col>
-      </Row>
+            </>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

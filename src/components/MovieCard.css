@@ -17,7 +17,7 @@
 .ratio {
   position: relative;
   width: 100%;
-  background-color: lightgray;
+  background-color: #444856;
 }
 
 .ratio::before {
