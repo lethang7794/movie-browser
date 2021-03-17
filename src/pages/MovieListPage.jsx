@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import './MovieListPage.css';
-import MovieCard from '../MovieCard';
+import MovieCard from '../components/MovieCard';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;

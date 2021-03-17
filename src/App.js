@@ -3,9 +3,9 @@ import { Container } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import MainNavBar from './components/MainNavBar';
-import HomePage from './components/pages/HomePage';
-import MovieDetailPage from './components/pages/MovieDetailPage';
-import MovieListPage from './components/pages/MovieListPage';
+import HomePage from './pages/HomePage';
+import MovieDetailPage from './pages/MovieDetailPage';
+import MovieListPage from './pages/MovieListPage';
 
 function App() {
   return (
