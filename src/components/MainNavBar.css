@@ -1,0 +1,27 @@
+.navbar .nav-link {
+  color: hsl(217, 59%, 38%) !important;
+  /* text-transform: uppercase; */
+  font-weight: bold;
+  font-size: 1.25rem;
+  /* margin-right: 1rem; */
+  text-align: center;
+  border-bottom: 5px solid transparent;
+  width: fit-content;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-collapse .nav-link {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+
+  margin-top: 0.5rem;
+}
+
+.navbar-collapse .nav-link.active {
+  border-bottom: 5px solid hsl(217, 59%, 38%);
+}
+
+.navbar-collapse.show .nav-link {
+}

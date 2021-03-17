@@ -1,10 +1,27 @@
 .MovieListPage {
-  background-color: #cb6530;
-  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-color: #f0f4f8;
+  /* background-color: #aeaeae; */
+  /* background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
+
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}
+
+.MovieListInfo {
+  background-color: #0f609b;
+  background-image: linear-gradient(
+    to right,
+    hsl(218, 61%, 37%),
+    hsl(208, 49%, 42%)
+  );
+
+  /* background-color: #cb6530; */
+  /* background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
 }
 
 .MovieList {
-  padding-top: 1rem;
+  padding-top: 7rem;
 }
 
 @media (max-width: 991.98px) {
@@ -14,7 +31,15 @@
   }
 }
 
-.move__image__overlay {
+.full-stretch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dark__overlay {
   background-image: radial-gradient(
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 0.2) 100%

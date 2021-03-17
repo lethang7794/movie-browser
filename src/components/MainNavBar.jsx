@@ -3,17 +3,27 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import coderSchoolLogo from '../images/CoderSchool-Logo.svg';
 import githubMark from '../images/GitHub-Mark-64px.png';
+import './MainNavBar.css';
 
 const MainNavBar = () => (
-  <Navbar bg='light' expand='lg' style={{ height: '80px' }}>
+  <Navbar
+    bg='light'
+    expand='lg'
+    style={{
+      padding: '0.75rem 1rem',
+      borderTop: '8px solid hsl(217, 59%, 38%)',
+    }}
+  >
     <Navbar.Brand>
-      <img src={coderSchoolLogo} alt='CoderSchool' width='200px' />
+      <Nav.Link as={NavLink} exact to='/'>
+        <img src={coderSchoolLogo} alt='CoderSchool' width='200px' />
+      </Nav.Link>
     </Navbar.Brand>
 
     <Navbar.Toggle aria-controls='basic-navbar-nav' />
 
     <Navbar.Collapse id='basic-navbar-nav'>
-      <Nav className='mr-auto'>
+      <Nav className='mx-auto'>
         <Nav.Link as={NavLink} exact to='/'>
           Home
         </Nav.Link>

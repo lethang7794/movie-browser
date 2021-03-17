@@ -7,18 +7,22 @@ const movieLists = {
   top_rated: {
     endpoint: 'movie/top_rated',
     title: 'Top Rated',
+    seeMorePath: '/top-rated',
   },
   now_playing: {
     endpoint: 'movie/now_playing',
     title: 'Now Playing',
+    seeMorePath: '/now-playing',
   },
   popular: {
     endpoint: 'movie/popular',
     title: 'Popular',
+    seeMorePath: '/popular',
   },
   upcoming: {
     endpoint: 'movie/upcoming',
     title: 'Upcoming',
+    seeMorePath: '/upcoming',
   },
 };
 

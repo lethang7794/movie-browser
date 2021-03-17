@@ -11,13 +11,13 @@ const movieLists = {
   top_rated: {
     endpoint: 'movie/top_rated',
     title: 'Top Rated Movies',
-    description: `Quae aut reiciendis et. Qui ea enim est ad nihil beatae laboriosam laudantium veritatis. Quia voluptates excepturi officia. Sit necessitatibus nihil ratione odio a incidunt dolores fugiat.`,
+    description: `Quae aut reiciendis et. Qui ea enim est ad nihil beatae laboriosam laudantium veritatis. Quia voluptates excepturi officia.`,
   },
   now_playing: {
     endpoint: 'movie/now_playing',
     title: 'Now Playing Movies',
     description:
-      'Quis dolorum sequi quo magnam. Non fugiat neque unde fuga deserunt qui. Voluptas quasi fugiat illum est voluptatem harum voluptas fugit. Voluptas sit eius omnis.',
+      'Quis dolorum sequi quo magnam. Non fugiat neque unde fuga deserunt qui. Voluptas quasi fugiat illum. Voluptas sit eius omnis.',
   },
   popular: {
     endpoint: 'movie/popular',
@@ -29,13 +29,13 @@ const movieLists = {
     endpoint: 'movie/upcoming',
     title: 'Upcoming Movies',
     description:
-      'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam. Voluptatum doloremque aut accusantium voluptatem doloribus quisquam nisi at sit.',
+      'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam.',
   },
   search: {
     endpoint: 'search/movie',
     title: 'Search for all movies',
     description:
-      'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam. Voluptatum doloremque aut accusantium voluptatem doloribus quisquam nisi at sit.',
+      'Qui velit ut nemo temporibus deleniti est aut esse. Et quod et quas velit voluptatem vero eum qui. Cupiditate voluptatum est qui quam.',
   },
 };
 
@@ -148,58 +148,91 @@ const MovieListPage = ({ type }) => {
   const shouldShowLoadMore =
     (location.pathname !== '/now-playing' &&
       location.pathname !== '/search' &&
+      movies.length === filteredMovies.length &&
       filteredMovies.length > 0) ||
     (location.pathname === '/search' &&
-      searchTerm !== '' &&
-      totalPages > 1 &&
-      filterTerm === searchTerm);
+      ((searchTerm !== '' && totalPages > 1 && filterTerm === searchTerm) ||
+        (isLoading && movies.length > 0)));
 
   const shouldShowPagination =
-    (filteredMovies.length > 0 || filterTerm === '') &&
+    ((movies.length === filteredMovies.length && filteredMovies.length > 0) ||
+      filterTerm === '') &&
     hasPagination &&
     !isLoading &&
     totalPages > 0;
 
   return (
     <div className='MovieListPage page'>
-      <Container>
-        <Row className='MovieListInfo p-2 flex-column justify-content-center align-items-center'>
-          <Col lg={6}>
-            <h1 className='text-center'>
+      <Container fluid>
+        <Row className='MovieListInfo p-5 flex-column justify-content-center align-items-center position-relative'>
+          {/* <div class='darker__overlay full-stretch'></div> */}
+          <Col
+            lg={6}
+            className='py-3 d-flex flex-column justify-content-center align-items-center'
+            style={{
+              maxWidth: '500px',
+            }}
+          >
+            <h1 className='text-center text-white'>
               {movieLists[movieListType] && movieLists[movieListType].title}
             </h1>
-            <p className='text-center'>
+            <p
+              className='text-center'
+              style={{
+                color: '#c1e5ff',
+              }}
+            >
               {movieLists[movieListType] &&
                 movieLists[movieListType].description}
             </p>
           </Col>
-          <>
+          <div
+            className='box-shadow border-radius'
+            style={{
+              // backdropFilter: 'blur(8px)',
+              // boxShadow: '1px 1px 16px 8px rgb(0 0 0 / 50%)',
+              backgroundColor: '#FFFFFF',
+              position: 'absolute',
+              transform: 'translateY(50%)',
+              bottom: '0',
+            }}
+          >
             {(location.pathname === '/search' || movieLists[movieListType]) && (
               <Form
                 inline
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}
+                style={{
+                  padding: '2rem',
+                }}
               >
                 <Form.Label htmlFor='searchForm' srOnly>
                   Movie
                 </Form.Label>
                 <Form.Control
-                  className='mb-2 mr-sm-2'
+                  className='mr-sm-2'
                   id='searchForm'
-                  placeholder=''
+                  placeholder='Filter or search'
                   onChange={(e) => {
                     setFilterTerm(e.target.value);
                   }}
                   value={filterTerm}
+                  style={{ backgroundColor: 'hsl(200, 10%, 94%)' }}
                 />
-                <Button type='submit' className='mb-2' onClick={handleSearch}>
-                  Search 🔎
+                <Button
+                  type='submit'
+                  onClick={handleSearch}
+                  className='bg-primary'
+                >
+                  🔎
                 </Button>
               </Form>
             )}
-          </>
+          </div>
         </Row>
+      </Container>
+      <Container>
         <Row className='MovieList'>
           <>
             {!hasPagination ? (
@@ -225,7 +258,7 @@ const MovieListPage = ({ type }) => {
                     onClick={() => {
                       setPage((page) => page + 1);
                     }}
-                    className='d-block w-100'
+                    className='d-block w-100 bg-primary'
                   >
                     {isLoading ? 'Loading' : 'See More'}
                   </Button>
@@ -242,6 +275,7 @@ const MovieListPage = ({ type }) => {
                     onClick={(e) => setPage((page) => page - 1)}
                     disabled={page === 1 ? true : false}
                     style={{ visibility: `${page === 1 ? 'hidden' : null}` }}
+                    className='bg-primary'
                   >
                     Previous
                   </Button>
@@ -252,6 +286,7 @@ const MovieListPage = ({ type }) => {
                     style={{
                       visibility: `${page === totalPages ? 'hidden' : null}`,
                     }}
+                    className='bg-primary'
                   >
                     Next
                   </Button>

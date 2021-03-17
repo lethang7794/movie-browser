@@ -55,7 +55,8 @@ const Hero = () => {
   };
 
   return (
-    <div className='Hero containter-fluid'>
+    <div className='Hero containter-fluid position-relative'>
+      <div class='darker__overlay full-stretch'></div>
       <Row>
         <Col xs={12} lg={{ span: 8, offset: 2 }}>
           <div className='SliderWrapper ratio ratio-16x9'>
@@ -72,7 +73,7 @@ const Hero = () => {
                         src={`${API_IMAGE_URL}/${backdrop_sizes[2]}${m.backdrop_path}`}
                         alt=''
                       />
-                      <div className='move__image__overlay'></div>
+                      <div className='darker__overlay'></div>
                       <div className='movie__info__wrapper'>
                         <Link
                           to={`movie/${m.id}-${moviePath}`}

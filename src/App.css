@@ -25,3 +25,11 @@
 .trailer-modal .modal-content .modal-footer {
   border-top: 0px;
 }
+
+.color-primary {
+  color: #0f609b;
+}
+
+.bg-primary {
+  background-color: #0f609b !important;
+}

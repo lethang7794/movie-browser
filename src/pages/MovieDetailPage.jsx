@@ -90,7 +90,8 @@ function MovieDetailPage() {
   };
 
   return (
-    <div className='MovieDetailPage page'>
+    <div className='MovieDetailPage page position-relative'>
+      <div class='darker__overlay full-stretch'></div>
       <Container>
         <Row className='Info'>
           <Col
@@ -216,7 +217,7 @@ function MovieDetailPage() {
                         src={`${API_IMAGE_URL}/${backdrop_sizes[2]}${image.file_path}`}
                         alt=''
                       />
-                      <div className='move__image__overlay'></div>
+                      <div className='dark__overlay'></div>
                     </div>
                   ))}
               </Slider>

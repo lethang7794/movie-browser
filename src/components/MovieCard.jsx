@@ -45,10 +45,18 @@ function MovieCard({ movie }) {
       style={{ paddingBottom: '1.5rem' }}
       className='MovieCardWrapper text-reset'
     >
-      <Card className='MovieCard' style={{ height: '100%' }}>
-        <div className='img-wrapper ratio ratio-16x9'>
-          <Card.Img variant='top' src={movieImageSrc} className='backdrop' />
-          <div className='move__image__overlay'></div>
+      <Card className='MovieCard border-radius' style={{ height: '100%' }}>
+        <div className='img-wrapper ratio ratio-16x9 border-radius'>
+          <Card.Img
+            variant='top'
+            src={movieImageSrc}
+            className='backdrop border-radius'
+            style={{
+              borderBottomLeftRadius: '0',
+              borderBottomRightRadius: '0',
+            }}
+          />
+          <div className='dark__overlay border-radius'></div>
         </div>
         <Card.Body>
           <Card.Title>
