@@ -5,6 +5,7 @@ import MainNavBar from './components/MainNavBar';
 import HomePage from './pages/HomePage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import MovieListPage from './pages/MovieListPage';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
           <MovieDetailPage />
         </Route>
         <Route>
-          <h1>Not Found</h1>
+          <NotFound />
         </Route>
       </Switch>
     </div>
