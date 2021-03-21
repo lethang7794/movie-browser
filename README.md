@@ -1,9 +1,10 @@
 # CoderSchool FTW - _MOVIE BROWSER_
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d30a7642-7e52-4db8-abee-ff0c0bebfafb/deploy-status)](https://app.netlify.com/sites/lqt-movie-browser/deploys)
 
 Created with love by: `Thang`
 
-View online at: [Demo app at Netlify](https://lqt-movie-browser.netlify.app/)
+View online at: [https://lqt-movie-browser.netlify.app/](https://lqt-movie-browser.netlify.app/)
 
 Summary: This is a clone of [IMDB](https://www.imdb.com/) built with _React_ using the public [The Movie Database (TMDb) API](https://developers.themoviedb.org/3/).
 
@@ -17,8 +18,6 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 <!-- TODO: 🎬 Make a gif and show here -->
 
 ## User Stories
-
-<!-- TODO: 🔴🟠🟢 ADD USER STORIES -->
 
 ### The following **required** functionalities are completed:
 
@@ -38,20 +37,8 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 
 ### The following **additional** features are implemented:
 
-- [ ] 🚀🚀🚀 This awesome README.md
+- [x] 🚀🚀🚀 This awesome README.md
 - [x] Make the path for a movie friendly (contains both the movie id and title)
-
-<!-- ## Time Spent and Lessons Learned -->
-<!-- Time spent: **X** hours spent in total. -->
-<!-- TODO: ⌛ Add time spent -->
-
-<!-- ### Challenges encountered while building the app:
-- A challange -->
-<!-- TODO: 🚧 What is the challanges?  -->
-
-<!-- ### Lessons Learned:
-- A lesson -->
-<!-- TODO: 🐱‍🏍 What did you learn? -->
 
 ## License
 
