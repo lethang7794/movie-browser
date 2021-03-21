@@ -1,0 +1,60 @@
+.PosterCard {
+  /* width: 100%; */
+  /* width: stretch; */
+
+  min-width: 200px;
+  margin-right: 1rem;
+}
+
+.scrolling-carousel > [data-arrow='left'],
+.scrolling-carousel > [data-arrow='right'] {
+  opacity: 1;
+  /* height: 42px; */
+  height: 100%;
+  width: 88px;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  z-index: 1;
+
+  cursor: pointer;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.scrolling-carousel > [data-arrow='left'] {
+  left: 0;
+
+  /* background: linear-gradient(90deg, #121212 10%, hsla(0, 0%, 100%, 0)); */
+  background: linear-gradient(90deg, #fff 10%, hsla(0, 0%, 100%, 0));
+}
+
+.scrolling-carousel > [data-arrow='right'] {
+  right: 0;
+
+  /* background: linear-gradient(270deg, #121212 10%, hsla(0, 0%, 100%, 0)); */
+  background: linear-gradient(270deg, #fff 10%, hsla(0, 0%, 100%, 0));
+}
+
+.scrolling-carousel > [data-arrow='left'] > button {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg)
+    no-repeat 50%;
+  transform: rotate(180deg);
+}
+
+.scrolling-carousel > [data-arrow='right'] > button {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg)
+    no-repeat 50%;
+}
+
+.scrolling-carousel > [data-arrow='left'] > button,
+.scrolling-carousel > [data-arrow='right'] > button {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

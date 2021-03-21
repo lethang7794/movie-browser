@@ -207,14 +207,14 @@ const MovieListPage = ({ type }) => {
                   e.preventDefault();
                 }}
                 style={{
-                  padding: '2rem',
+                  padding: '1.5rem',
                 }}
               >
                 <Form.Label htmlFor='searchForm' srOnly>
                   Movie
                 </Form.Label>
                 <Form.Control
-                  className='mr-sm-2'
+                  className='mr-sm-2 my-2'
                   id='searchForm'
                   placeholder='Filter or search'
                   onChange={(e) => {
@@ -226,7 +226,7 @@ const MovieListPage = ({ type }) => {
                 <Button
                   type='submit'
                   onClick={handleSearch}
-                  className='bg-primary'
+                  className='bg-primary mx-auto my-2'
                 >
                   🔎
                 </Button>

@@ -48,7 +48,7 @@ const Hero = () => {
     swipeToSlide: true,
     focusOnSelect: true,
     pauseOnHover: true,
-    lazyLoad: true,
+    // lazyLoad: true,
     infinite: true,
     // autoplay: true,
     autoplayspeed: 3000,

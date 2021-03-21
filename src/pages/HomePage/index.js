@@ -1,14 +1,14 @@
 import React from 'react';
 import Hero from './Hero';
-import TypeSection from './TypeSection';
+import MovieListSection from './MovieListSection';
 
 export const HomePage = () => {
   return (
     <div className='HomePage'>
       <Hero />
-      <TypeSection type={'upcoming'} />
-      <TypeSection type={'top_rated'} />
-      <TypeSection type={'popular'} />
+      <MovieListSection type={'upcoming'} />
+      <MovieListSection type={'top_rated'} />
+      <MovieListSection type={'popular'} />
     </div>
   );
 };
