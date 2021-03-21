@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Col, Row } from 'react-bootstrap';
 import './style.css';
 import { Link } from 'react-router-dom';
+import PlaceholderImage from '../../../components/PlaceholderImage';
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
@@ -60,6 +61,7 @@ const Hero = () => {
       <Row>
         <Col xs={12} lg={{ span: 8, offset: 2 }}>
           <div className='SliderWrapper ratio ratio-16x9'>
+            <PlaceholderImage />
             <Slider {...settings}>
               {movies &&
                 movies.slice(0, 9).map((m, index) => {

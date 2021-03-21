@@ -6,6 +6,7 @@ export const HomePage = () => {
   return (
     <div className='HomePage'>
       <Hero />
+      <MovieListSection type={'now_playing'} />
       <MovieListSection type={'upcoming'} />
       <MovieListSection type={'top_rated'} />
       <MovieListSection type={'popular'} />
