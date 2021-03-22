@@ -4,6 +4,9 @@ import './MovieListPage.css';
 import MovieCard from '../components/MovieCard';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = process.env.REACT_APP_TMDB_API_URL;
 
@@ -243,7 +246,14 @@ const MovieListPage = ({ type }) => {
             ) : (
               <>
                 {isLoading ? (
-                  <h1 className='w-100 mt-5 text-center'>Loading</h1>
+                  <div className='d-flex justify-content-center align-items-center w-100'>
+                    <Loader
+                      type='ThreeDots'
+                      color='hsl(217, 59%, 38%)'
+                      height={80}
+                      width={80}
+                    />
+                  </div>
                 ) : (
                   <>{showMovies(filteredMovies)}</>
                 )}
