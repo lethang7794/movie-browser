@@ -4,7 +4,7 @@ import MovieListSection from './MovieListSection';
 
 export const HomePage = () => {
   return (
-    <div className='HomePage'>
+    <div className='HomePage page'>
       <Hero />
       <MovieListSection type={'now_playing'} />
       <MovieListSection type={'upcoming'} />

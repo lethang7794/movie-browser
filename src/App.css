@@ -1,6 +1,13 @@
 .App {
 }
 
+.page {
+  min-height: 100vh;
+  padding-bottom: 2rem;
+
+  background-color: hsl(210, 44%, 96%);
+}
+
 .trailer-modal {
   max-width: 150vh;
 }

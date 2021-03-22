@@ -50,7 +50,7 @@ const MainNavBar = () => (
           href='https://github.com/lethang7794/movie-browser'
           target='_blank'
           rel='noreferrer'
-          style={{ padding: '0.5rem 1rem', margin: '1rem auto 0' }}
+          style={{ padding: '0.5rem 1rem', margin: '1rem auto' }}
         >
           <img src={githubMark} alt='Github' width='32px' />
         </a>

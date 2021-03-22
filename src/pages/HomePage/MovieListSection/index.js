@@ -74,7 +74,10 @@ const MovieListSection = ({ type }) => {
 
   return (
     <Container className='MovieTypeList py-5'>
-      <div className='mb-3 d-flex justify-content-between'>
+      <div
+        className='mb-3 d-flex justify-content-between'
+        style={{ borderBottom: '4px solid rgb(40, 84, 154)' }}
+      >
         <h1 className='color-primary'>{listTitle}</h1>
         <div className='d-flex justify-content-center align-items-center'>
           <Link
@@ -93,13 +96,19 @@ const MovieListSection = ({ type }) => {
             m?.poster_path &&
             `${API_IMAGE_URL}/${poster_sizes[3]}${m.poster_path}`;
 
+          const moviePath = m?.title
+            ?.replace(/[\s]+|\t|\n|\r|\//g, '-') // Replace spaces, tab, newline, slash with dash.
+            .replace(/[^a-zA-Z0-9-_]/g, ''); // Remove any character that is not a word character or dash.
+
           return (
-            <div key={idx} className='PosterCard'>
-              <div className='ratio ratio-3x2' style={{ maxWidth: '200px' }}>
-                {!poster_path && <PlaceholderImage />}
-                {poster_path && <Image src={poster_path} alt='' />}
+            <Link to={`movie/${m.id}-${moviePath}`}>
+              <div key={idx} className='PosterCard'>
+                <div className='ratio ratio-3x2' style={{ maxWidth: '200px' }}>
+                  {!poster_path && <PlaceholderImage />}
+                  {poster_path && <Image src={poster_path} alt='' />}
+                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
         <div className='PlaceholderPosterCard PosterCard'>

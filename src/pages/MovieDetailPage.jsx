@@ -91,12 +91,22 @@ function MovieDetailPage() {
 
   return (
     <div className='MovieDetailPage page position-relative'>
-      <div class='darker__overlay full-stretch'></div>
-      <Container>
-        <Row className='Info'>
+      <div
+        style={{
+          position: 'absolute',
+          backgroundColor: '#0f609b',
+          backgroundImage:
+            'linear-gradient( to bottom, hsl(218, 61%, 37%), hsl(207, 43%, 96%) )',
+          height: '30rem',
+          width: '100%',
+        }}
+      ></div>
+      <Container className='pt-5'>
+        <Row className='Banner position-relative box-shadow bg-white py-5'>
           <Col
-            xs={3}
-            lg={{ span: 3, offset: 2 }}
+            xs={{ span: 8, offset: 2 }}
+            md={{ span: 6, offset: 3 }}
+            lg={{ span: 3, offset: 1 }}
             // className='d-none d-lg-block'
           >
             <div className='ratio ratio-3x2'>
@@ -107,7 +117,7 @@ function MovieDetailPage() {
             </div>
           </Col>
 
-          <Col xs={9} lg={5}>
+          <Col xs={12} lg={{ span: 7 }} className='Info text-center'>
             <h2 className='mb-0'>
               {movie.title}
               <span
@@ -155,13 +165,21 @@ function MovieDetailPage() {
               <span className='runtime'>{movieRuntime}</span>
             </div>
             <div>
-              <h3 className='font-italic mt-2'>{movie.tagline}</h3>
-              <p style={{ fontSize: '0.75rem' }}>{movie.overview}</p>
+              <h3 className='font-italic mt-4'>{movie.tagline}</h3>
+              <p
+                className='mt-3 mx-auto text-left'
+                style={{ fontSize: '1rem', maxWidth: '30rem' }}
+              >
+                {movie.overview}
+              </p>
             </div>
-            <Button variant='primary' onClick={handleShow} className=''>
+            <Button
+              variant='success'
+              onClick={handleShow}
+              className='py-3 px-4 font-bold'
+            >
               Watch Trailer
             </Button>
-            <hr />
 
             {/* <Row>
                     <Col sm={6}>
@@ -206,7 +224,7 @@ function MovieDetailPage() {
           ))}
         </ul>  */}
 
-        <Row>
+        <Row className='Banner box-shadow bg-white mt-5 py-4'>
           <Col xs={12} lg={{ span: 8, offset: 2 }}>
             <div className='SliderWrapper'>
               <Slider {...settings}>
