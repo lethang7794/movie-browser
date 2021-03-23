@@ -56,7 +56,13 @@ function MovieCard({ movie }) {
               borderBottomRightRadius: '0',
             }}
           />
-          <div className='dark__overlay border-radius'></div>
+          <div
+            className='dark__overlay'
+            style={{
+              borderTopLeftRadius: '0.5rem',
+              borderTopRightRadius: '0.5rem',
+            }}
+          ></div>
         </div>
         <Card.Body>
           <Card.Title className='rating'>
