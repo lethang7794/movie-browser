@@ -11,7 +11,7 @@
   opacity: 1;
   /* height: 42px; */
   height: 100%;
-  width: 88px;
+  width: 80px;
 
   position: absolute;
   top: 0;
@@ -22,6 +22,13 @@
   cursor: pointer;
   margin-bottom: auto;
   margin-top: auto;
+}
+
+@media (max-width: 567.98px) {
+  .scrolling-carousel > [data-arrow='left'],
+  .scrolling-carousel > [data-arrow='right'] {
+    width: 40px;
+  }
 }
 
 .scrolling-carousel > [data-arrow='left'] {

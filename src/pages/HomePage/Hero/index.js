@@ -51,7 +51,7 @@ const Hero = () => {
     pauseOnHover: true,
     // lazyLoad: true,
     infinite: true,
-    // autoplay: true,
+    autoplay: true,
     autoplayspeed: 3000,
   };
 
