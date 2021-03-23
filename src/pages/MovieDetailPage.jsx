@@ -224,12 +224,12 @@ function MovieDetailPage() {
           ))}
         </ul>  */}
 
-        <Row className='Banner box-shadow bg-white mt-5 py-4'>
-          <Col xs={12} lg={{ span: 8, offset: 2 }}>
-            <div className='SliderWrapper'>
-              <Slider {...settings}>
-                {movie.images &&
-                  movie.images.backdrops.slice(0, 10).map((image, index) => (
+        {movie?.images?.backdrops.length > 0 && (
+          <Row className='Banner box-shadow bg-white mt-5 py-4'>
+            <Col xs={12} lg={{ span: 8, offset: 2 }}>
+              <div className='SliderWrapper'>
+                <Slider {...settings}>
+                  {movie.images.backdrops.slice(0, 10).map((image, index) => (
                     <div key={index} className='Slider__item ratio ratio-16x9'>
                       <img
                         src={`${API_IMAGE_URL}/${backdrop_sizes[2]}${image.file_path}`}
@@ -238,10 +238,11 @@ function MovieDetailPage() {
                       <div className='dark__overlay'></div>
                     </div>
                   ))}
-              </Slider>
-            </div>
-          </Col>
-        </Row>
+                </Slider>
+              </div>
+            </Col>
+          </Row>
+        )}
 
         <Modal
           show={show}
