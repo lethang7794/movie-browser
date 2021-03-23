@@ -225,8 +225,8 @@ function MovieDetailPage() {
         </ul>  */}
 
         {movie?.images?.backdrops.length > 0 && (
-          <Row className='Banner box-shadow bg-white mt-5 py-4'>
-            <Col xs={12} lg={{ span: 8, offset: 2 }}>
+          <Row className='Banner box-shadow bg-white mt-5 py-4 px-0'>
+            <Col xs={12} md={{ span: 12, offset: 0 }}>
               <div className='SliderWrapper'>
                 <Slider {...settings}>
                   {movie.images.backdrops.slice(0, 10).map((image, index) => (
